@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
+import Welcome from './components/Welcome';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hello React Native!</Text>
+      <Welcome />
     </SafeAreaView>
   );
 };
