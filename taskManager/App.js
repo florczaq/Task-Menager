@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
 import Welcome from './components/Welcome';
+import NoteEdit from './components/NoteEdit';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Welcome />
+      {/* <NoteEdit /> */}
     </SafeAreaView>
   );
 };

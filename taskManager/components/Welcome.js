@@ -6,9 +6,10 @@ import {
   View,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableNativeFeedback,
 } from 'react-native';
 
-const buttons = ['My Tasks', 'My Notes', 'Settings', 'Other one'];
+const buttons = ['My Tasks', 'My Notes', 'Other one', 'Settings'];
 
 const Welcome = props => {
   return (
