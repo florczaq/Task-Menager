@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
 
 const NoteEdit = props => {
+  const [note, setNote] = useState({title: '', text: ''});
+
+  const onSubmit = () => {};
+  const onCancel = () => {};
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.upperContainer}>
@@ -17,11 +21,16 @@ const NoteEdit = props => {
         <View style={styles.upperRect}>
           <TextInput
             editable
-            style={styles.upperText}
+            style={styles.title}
             placeholder="Title"
             placeholderTextColor="lightgrey"
             autoFocus={false}
+            value={note.title}
+            onChange={v => {
+              setNote({title: v});
+            }}
           />
+          <View style={styles.underline} />
         </View>
       </View>
       <View style={styles.textareaContainer}>
@@ -34,6 +43,10 @@ const NoteEdit = props => {
           autoCorrect
           style={styles.textarea}
           placeholder={'Text'}
+          value={note.text}
+          onChange={v => {
+            setNote({text: v});
+          }}
         />
       </View>
       <View style={styles.buttonContainer}>
@@ -65,10 +78,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  upperText: {
-    width: '95%',
+  title: {
+    width: '90%',
     fontSize: 30,
-    textDecorationLine: 'underline',
+    color: '#fff',
+    textAlign: 'left',
+    margin: 0,
   },
   upperBackroundRect: {
     position: 'absolute',
@@ -80,35 +95,45 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   textarea: {
-    width: '98%',
+    width: '95%',
     height: '100%',
-    borderWidth: 1,
+    borderWidth: 0.3,
     textAlignVertical: 'top',
     padding: 10,
+    borderColor: 'grey',
+    fontSize: 15,
   },
   textareaContainer: {
     width: '100%',
     height: '70%',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    fontSize: 20,
   },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
     backgroundColor: '#fff',
     margin: 10,
     borderRadius: 5,
-    borderColor: '#000',
+    borderColor: 'grey',
     borderWidth: 2,
   },
   buttonContainer: {
+    paddingHorizontal: 0,
     width: '100%',
     height: '10%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'green',
+    alignItems: 'center',
+  },
+  underline: {
+    width: '90%',
+    height: 2,
+    backgroundColor: '#fff',
+    opacity: 0.7,
   },
 });
 
