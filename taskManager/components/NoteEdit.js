@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '90%',
-    fontSize: 30,
+    fontSize: 40,
     color: '#fff',
     textAlign: 'left',
     margin: 0,
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
   },
   textarea: {
     width: '95%',
-    height: '100%',
-    borderWidth: 0.3,
+    height: '80%',
+    borderWidth: 1,
     textAlignVertical: 'top',
     padding: 10,
     borderColor: 'grey',
-    fontSize: 15,
+    fontSize: 20,
   },
   textareaContainer: {
     width: '100%',

@@ -1,5 +1,14 @@
 import React, {useState} from 'react';
-import {SafeAreaView, Text, StyleSheet, View, TextInput} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+
+const buttons = ['Set date', 'Set reminder', 'Preferences'];
 
 const TaskEdit = props => {
   const [task, setTask] = useState({
@@ -21,13 +30,36 @@ const TaskEdit = props => {
             autoFocus={false}
             value={task.title}
             onChange={v => {
-              setNote({title: v});
+              setTask({title: v});
             }}
           />
           <View style={styles.underline} />
         </View>
       </View>
-      <Text>Task Edit</Text>
+      <View style={styles.content}>
+        <TextInput
+          placeholder="Description"
+          style={styles.description}
+          onChange={v => {
+            setTask({description: v});
+          }}
+        />
+        <View style={styles.buttonContainer}>
+          {buttons.map((element, i) => (
+            <TouchableOpacity key={i} style={styles.button}>
+              <Text style={styles.buttonText}>{element}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styles.confirmButtonContainer}>
+          <TouchableOpacity style={styles.confirmButton}>
+            <Text style={{fontSize: 15}}>X</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.confirmButton}>
+            <Text style={{fontSize: 15}}>OK</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -51,7 +83,7 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '90%',
-    fontSize: 30,
+    fontSize: 40,
     color: '#fff',
     textAlign: 'left',
     margin: 0,
@@ -70,6 +102,53 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: '#fff',
     opacity: 0.7,
+  },
+  description: {
+    width: '80%',
+    fontSize: 20,
+    height: '10%',
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+  },
+  button: {
+    width: '70%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'grey',
+  },
+  content: {
+    width: '100%',
+    height: '80%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    height: '50%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 25,
+  },
+  confirmButtonContainer: {
+    height: '10%',
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  confirmButton: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'grey',
   },
 });
 
