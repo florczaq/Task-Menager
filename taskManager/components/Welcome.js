@@ -1,101 +1,41 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  View,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
 
+import {general, welcomePage} from './styles/Styles';
+import Header from './elements/Header';
 const buttons = [
   {name: 'My Tasks', link: 'Task List'},
   {name: 'My Notes', link: 'Notes List'},
-  {name: 'Other one', link: ''},
+  {name: 'New Task', link: 'Task Edit'},
+  {name: 'New Note', link: 'Note Edit'},
   {name: 'Settings', link: ''},
 ];
 
 const Welcome = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.upperContainer}>
-        <View style={styles.upperBackroundRect}></View>
-        <View style={styles.upperRect}>
-          <Text style={styles.upperText}>Task Manager</Text>
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        {buttons.map((button, i) => (
-          <TouchableOpacity
-            key={i}
-            style={styles.button}
-            onPress={() => {
-              button.link && navigation.navigate(button.link);
-            }}
-          >
-            <Text style={{color: '#000'}}>{button.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+    <SafeAreaView style={general.container}>
+      <Header text="Task Manager" />
+      <Buttons navigation={navigation} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  upperContainer: {
-    width: '100%',
-    height: '40%',
-  },
-  upperRect: {
-    width: '100%',
-    height: '80%',
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  upperText: {
-    color: '#fff',
-    fontSize: 50,
-  },
-  upperBackroundRect: {
-    position: 'absolute',
-    backgroundColor: 'blue',
-    top: '0%',
-    width: '150%',
-    height: '100%',
-    rotation: 5,
-    borderWidth: 2,
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: '90%',
-    height: '60%',
-    backgroundColor: 'transparent',
-    marginTop: '20%',
-  },
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 120,
-    backgroundColor: '#fff',
-    height: 120,
-    margin: 10,
-    borderRadius: 20,
-    borderColor: '#000',
-    borderWidth: 2,
-  },
-});
+const Buttons = ({navigation}) => {
+  const navigate = link => link && navigation.navigate(link);
+
+  return (
+    <View style={welcomePage.buttonContainer}>
+      {buttons.map((button, i) => (
+        <TouchableOpacity
+          key={i}
+          style={welcomePage.button}
+          onPress={() => navigate(button.link)}
+        >
+          <Text style={welcomePage.buttonText}>{button.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
 
 export default Welcome;

@@ -7,8 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {NotesGenerator} from './examples/ExampleNotes';
-
+import {NotesGenerator} from './examples/ExampleData';
 const notes = NotesGenerator(9);
 
 const NotesList = props => {
