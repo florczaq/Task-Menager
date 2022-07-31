@@ -9,9 +9,14 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-const buttons = ['My Tasks', 'My Notes', 'Other one', 'Settings'];
+const buttons = [
+  {name: 'My Tasks', link: 'Task List'},
+  {name: 'My Notes', link: 'Notes List'},
+  {name: 'Other one', link: ''},
+  {name: 'Settings', link: ''},
+];
 
-const Welcome = props => {
+const Welcome = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.upperContainer}>
@@ -21,9 +26,15 @@ const Welcome = props => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        {buttons.map((element, i) => (
-          <TouchableOpacity key={i} style={styles.button}>
-            <Text style={{color: '#000'}}>{element}</Text>
+        {buttons.map((button, i) => (
+          <TouchableOpacity
+            key={i}
+            style={styles.button}
+            onPress={() => {
+              button.link && navigation.navigate(button.link);
+            }}
+          >
+            <Text style={{color: '#000'}}>{button.name}</Text>
           </TouchableOpacity>
         ))}
       </View>

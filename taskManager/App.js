@@ -4,15 +4,21 @@ import Welcome from './components/Welcome';
 import NoteEdit from './components/NoteEdit';
 import TaskEdit from './components/TaskEdit';
 import TasksList from './components/TasksList';
+import NotesList from './components/NotesList';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Welcome /> */}
-      {/* <NoteEdit /> */}
-      {/* <TaskEdit /> */}
-      <TasksList />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={Welcome} />
+        <Stack.Screen name="Notes List" component={NotesList} />
+        <Stack.Screen name="Task List" component={TasksList} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
