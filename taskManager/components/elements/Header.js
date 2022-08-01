@@ -1,12 +1,21 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {header} from '../styles/Styles';
+
 const Header = props => {
   return (
     <View style={header.upperContainer}>
       <View style={header.upperBackroundRect}></View>
       <View style={header.upperRect}>
-        <Text style={header.upperText}>{props.text}</Text>
+        {props.stateUpdate ? (
+          <TextInput
+            style={header.input}
+            value={props.state}
+            onChangeText={props.stateUpdate}
+          />
+        ) : (
+          <Text style={header.upperText}>{props.text}</Text>
+        )}
       </View>
     </View>
   );

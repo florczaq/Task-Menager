@@ -8,7 +8,7 @@ const buttons = [
   {name: 'My Notes', link: 'Notes List'},
   {name: 'New Task', link: 'Task Edit'},
   {name: 'New Note', link: 'Note Edit'},
-  {name: 'Settings', link: ''},
+  // {name: 'Settings', link: ''},
 ];
 
 const Welcome = ({navigation}) => {

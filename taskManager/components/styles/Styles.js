@@ -43,6 +43,19 @@ export const header = StyleSheet.create({
     borderWidth: 2,
     zIndex: 5,
   },
+  input: {
+    color: '#fff',
+    fontSize: 40,
+    borderBottomWidth: 2,
+    borderBottomColor: '#fff',
+    paddingBottom: 5,
+    paddingHorizontal: 30,
+    minWidth: '40%',
+    textAlign: 'center',
+    textShadowColor: '#000',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 5,
+  },
 });
 
 export const welcomePage = StyleSheet.create({
@@ -55,7 +68,7 @@ export const welcomePage = StyleSheet.create({
     width: '90%',
     height: '60%',
     backgroundColor: 'transparent',
-    marginTop: '60%',
+    marginTop: '70%',
   },
   button: {
     justifyContent: 'center',
@@ -116,4 +129,69 @@ export const taskList = StyleSheet.create({
   scrollView: {
     width: '100%',
   },
+});
+
+export const noteList = StyleSheet.create({
+  noteContainer: {
+    width: '100%',
+    marginTop: '50%',
+    marginBottom: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  note: {
+    width: '40%',
+    height: 250,
+    backgroundColor: 'lightgrey',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 15,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: 'grey',
+  },
+});
+
+export const noteEdit = StyleSheet.create({
+  textarea: {
+    width: '95%',
+    minHeight: '40%',
+    maxHeight: '90%',
+    borderWidth: 1,
+    textAlignVertical: 'top',
+    padding: 10,
+    borderColor: 'grey',
+    fontSize: 25,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+  },
+  textareaContainer: {
+    width: '100%',
+    height: '60%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    fontSize: 20,
+    marginTop: '50%',
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: 80,
+    backgroundColor: '#fff',
+    margin: 10,
+    borderRadius: 5,
+    borderColor: 'grey',
+    borderWidth: 2,
+  },
+  buttonContainer: {
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  buttonText: {fontSize: 20},
 });
