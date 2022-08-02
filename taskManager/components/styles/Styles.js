@@ -169,7 +169,7 @@ export const noteEdit = StyleSheet.create({
   },
   textareaContainer: {
     width: '100%',
-    height: '60%',
+    height: '40%',
     justifyContent: 'flex-start',
     alignItems: 'center',
     fontSize: 20,
@@ -188,10 +188,82 @@ export const noteEdit = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
+    height: '35%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+  },
+  confirmationButtonsContainer: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  preferences: {
+    backgroundColor: '#fff',
+    width: '85%',
+    borderRadius: 20,
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'grey',
+  },
+});
+
+export const taskEdit = StyleSheet.create({
+  description: {
+    width: '80%',
+    fontSize: 20,
     height: '10%',
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+  },
+  button: {
+    width: '70%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: 'grey',
+    backgroundColor: '#fff',
+  },
+  content: {
+    marginTop: '40%',
+    width: '100%',
+    height: '80%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    height: '80%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  confirmButtonContainer: {
+    height: '20%',
+    width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  buttonText: {fontSize: 20},
+  confirmButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: 80,
+    backgroundColor: '#fff',
+    margin: 10,
+    borderRadius: 5,
+    borderColor: 'grey',
+    borderWidth: 2,
+  },
 });

@@ -26,34 +26,38 @@ const TextArea = props => {
   );
 };
 
-const ActionButtons = props => {
+const ActionButtons = ({navigation}, props) => {
   const buttons = [
-    {content: '❌', func: props.onCancel},
-    {content: '✔', func: props.onSubmit},
+    {content: '❌', func: () => navigation.goBack()},
+    {content: 'Atch', func: () => navigation.goBack()},
+    {content: '✔', func: () => navigation.navigate('Notes List')},
   ];
 
   return (
     <View style={styles.buttonContainer}>
-      {buttons.map((button, i) => (
-        <TouchableOpacity style={styles.button} key={i} onPress={button.func}>
-          <Text style={styles.buttonText}>{button.content}</Text>
-        </TouchableOpacity>
-      ))}
+      <TouchableOpacity style={styles.preferences}>
+        <Text style={styles.buttonText}>Preferences</Text>
+      </TouchableOpacity>
+      <View style={styles.confirmationButtonsContainer}>
+        {buttons.map((button, i) => (
+          <TouchableOpacity style={styles.button} key={i} onPress={button.func}>
+            <Text style={styles.buttonText}>{button.content}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };
 
 const NoteEdit = ({navigation}, props) => {
   const [note, setNote] = useState({title: 'New Note', text: ''});
-  const titleUpdate = v => setNote({title: v, text: note.text});
-  const goBack = () => navigation.goBack();
-  const saveNote = () => navigation.navigate('Notes List');
+  const titleUpdate = v => setNote({...note, title: v});
 
   return (
     <SafeAreaView style={general.container}>
       <Header state={note.title} stateUpdate={titleUpdate} />
       <TextArea note={note} setNote={setNote} />
-      <ActionButtons onSubmit={saveNote} onCancel={goBack} />
+      <ActionButtons navigation={navigation} />
     </SafeAreaView>
   );
 };
