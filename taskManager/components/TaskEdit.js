@@ -5,25 +5,113 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Modal,
+  ScrollView,
 } from 'react-native';
 import {general, taskEdit as styles} from './styles/Styles';
 import Header from './elements/Header';
 import DatePicker from 'react-native-date-picker';
 
+class RemindersList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        {content: '24 h', selected: false},
+        {content: '12 h', selected: false},
+        {content: '6 h', selected: false},
+        {content: '4 h', selected: false},
+        {content: '2 h', selected: false},
+        {content: '1 h', selected: false},
+        {content: '30 min', selected: false},
+        {content: '15 min', selected: false},
+        {content: '10 min', selected: false},
+        {content: '5 min', selected: false},
+      ],
+    };
+    this.itemSelected = this.itemSelected.bind(this);
+    this.renderItems = this.renderItems.bind(this);
+  }
+
+  itemSelected = id => {
+    let temp = this.state.items;
+    temp[id].selected = !temp[id].selected;
+    this.setState({items: temp});
+    this.forceUpdate();
+    console.log(this.state.items[id]);
+  };
+
+  renderItems = () => {
+    return this.state.items.map((item, i) => (
+      <TouchableOpacity
+        key={i}
+        style={[
+          styles.reminderButton,
+          styles[`_reminderButtonSelected_${item.selected}`],
+        ]}
+        onPress={() => this.itemSelected(i)}
+      >
+        <Text
+          style={[
+            styles.reminderButtonText,
+            styles[`_reminderButtonTextSelected_${item.selected}`],
+          ]}
+        >
+          {item.content}
+        </Text>
+      </TouchableOpacity>
+    ));
+  };
+
+  render() {
+    return (
+      <Modal
+        animationType="fade"
+        visible={this.props.visible}
+        transparent={true}
+        style={styles.reminderModal}
+      >
+        <View style={styles.reminderContainer}>
+          <View style={styles.reminderScrollViewContainer}>
+            <ScrollView style={styles.reminderScrollView}>
+              <View style={styles.reminderItemsContainer}>
+                {this.renderItems()}
+              </View>
+            </ScrollView>
+          </View>
+          <TouchableOpacity
+            style={styles.reminderCloseButton}
+            onPress={this.props.onClose}
+          >
+            <Text style={styles.reminderCloseButtonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
+  }
+}
+
 const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
-  const today = new Date();
+  const [dateButtonText, setDateButtonText] = useState('Set Date');
+  const [reminderModalVisible, setReminderModalVisible] = useState(false);
 
   const buttons = [
-    {content: 'Set date', func: () => setOpenDate(true)},
-    {content: 'Set reminder', func: () => {}},
+    {
+      content: dateButtonText,
+      func: () => setOpenDate(true),
+    },
+    {
+      content: 'Set reminder',
+      func: () => setReminderModalVisible(true),
+    },
     {content: 'Preferences', func: () => {}},
   ];
 
   const confirmButtons = [
     {content: '❌', func: () => props.navigation.goBack()},
     {content: 'Atch', func: () => {}},
-    {content: '✔', func: () => props.navigation.navigate('Task List')},
+    {content: '✔', func: () => props.navigation.navigate('Home')},
   ];
 
   const buttonsRender = buttons.map((button, i) => (
@@ -42,6 +130,14 @@ const Buttons = props => {
     </TouchableOpacity>
   ));
 
+  const dateSelected = date => {
+    setOpenDate(false);
+    props.setDate(date);
+    setDateButtonText(
+      `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, -3)}`,
+    );
+  };
+
   return (
     <View style={styles.buttonContainer}>
       {buttonsRender}
@@ -51,12 +147,14 @@ const Buttons = props => {
         is24hourSource="device"
         title={'Task date'}
         open={openDate}
-        date={today}
-        minimumDate={today}
+        date={new Date()}
+        minimumDate={new Date()}
         onCancel={() => setOpenDate(false)}
-        onConfirm={date => {
-          setOpenDate(false), props.setDate(date);
-        }}
+        onConfirm={dateSelected}
+      />
+      <RemindersList
+        visible={reminderModalVisible}
+        onClose={() => setReminderModalVisible(false)}
       />
     </View>
   );
@@ -79,16 +177,20 @@ const TaskEdit = ({navigation}, props) => {
     date: '',
     reminder: '',
   });
-  const updateTitle = v => setTask({...task, title: v});
-  const updateDescription = v => setTask({...task, description: v});
 
   return (
     <SafeAreaView style={general.container}>
-      <Header state={task.title} stateUpdate={updateTitle} />
+      <Header
+        state={task.title}
+        stateUpdate={v => setTask({...task, title: v})}
+      />
       <View style={styles.content}>
-        <Description updateDescription={updateDescription} />
+        <Description
+          updateDescription={v => setTask({...task, description: v})}
+        />
         <Buttons
           navigation={navigation}
+          selectedDate={task.date}
           setDate={date => setTask({...task, date: date})}
         />
       </View>
