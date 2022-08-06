@@ -38,7 +38,6 @@ class RemindersList extends React.Component {
     temp[id].selected = !temp[id].selected;
     this.setState({items: temp});
     this.forceUpdate();
-    console.log(this.state.items[id]);
   };
 
   renderItems = () => {
@@ -81,7 +80,18 @@ class RemindersList extends React.Component {
           </View>
           <TouchableOpacity
             style={styles.reminderCloseButton}
-            onPress={this.props.onClose}
+            onPress={() =>
+              this.props.onSave(
+                this.state.items
+                  .map(item => {
+                    return item.selected ? item.content : null;
+                  })
+                  .filter(item => {
+                    if (item !== undefined) return item;
+                  })
+                  .join(', '),
+              )
+            }
           >
             <Text style={styles.reminderCloseButtonText}>Save</Text>
           </TouchableOpacity>
@@ -94,6 +104,8 @@ class RemindersList extends React.Component {
 const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
   const [dateButtonText, setDateButtonText] = useState('Set Date');
+  const [remindersButtonText, setRemindersButtonText] =
+    useState('Set reminders');
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
 
   const buttons = [
@@ -102,7 +114,7 @@ const Buttons = props => {
       func: () => setOpenDate(true),
     },
     {
-      content: 'Set reminder',
+      content: remindersButtonText,
       func: () => setReminderModalVisible(true),
     },
     {content: 'Preferences', func: () => {}},
@@ -138,6 +150,19 @@ const Buttons = props => {
     );
   };
 
+  const validateReminderButtonText = reminders => {
+    if (!reminders) return 'Set reminders';
+    return String(reminders).length > 25
+      ? `${reminders.toString().slice(0, 25)}...`
+      : reminders.toString();
+  };
+
+  const saveReminders = reminders => {
+    setReminderModalVisible(false);
+    props.setReminders(reminders);
+    setRemindersButtonText(validateReminderButtonText(reminders));
+  };
+
   return (
     <View style={styles.buttonContainer}>
       {buttonsRender}
@@ -152,10 +177,7 @@ const Buttons = props => {
         onCancel={() => setOpenDate(false)}
         onConfirm={dateSelected}
       />
-      <RemindersList
-        visible={reminderModalVisible}
-        onClose={() => setReminderModalVisible(false)}
-      />
+      <RemindersList visible={reminderModalVisible} onSave={saveReminders} />
     </View>
   );
 };
@@ -170,12 +192,12 @@ const Description = props => {
   );
 };
 
-const TaskEdit = ({navigation}, props) => {
+const TaskEdit = ({navigation}) => {
   const [task, setTask] = useState({
     title: 'New Task',
     description: '',
     date: '',
-    reminder: '',
+    reminders: [],
   });
 
   return (
@@ -190,8 +212,8 @@ const TaskEdit = ({navigation}, props) => {
         />
         <Buttons
           navigation={navigation}
-          selectedDate={task.date}
           setDate={date => setTask({...task, date: date})}
+          setReminders={rem => setTask({...task, reminders: rem})}
         />
       </View>
     </SafeAreaView>
