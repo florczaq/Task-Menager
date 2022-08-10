@@ -122,8 +122,9 @@ export const taskList = StyleSheet.create({
   description: {
     fontSize: 15,
     minWidth: '90%',
-    textAlign: 'center',
+    textAlign: 'left',
     textAlignVertical: 'center',
+    paddingLeft: '15%',
   },
   date: {
     fontSize: 17,
@@ -346,5 +347,38 @@ export const taskEdit = StyleSheet.create({
   },
   _reminderButtonTextSelected_true: {
     color: '#fff',
+  },
+});
+
+export const colorPicker = StyleSheet.create({
+  centerDiv: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    width: '100%',
+    height: '30%',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    elevation: 10,
+    borderWidth: 4,
+    borderColor: 'grey',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  saveButton: {
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: 'grey',
+    width: '50%',
+    height: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    fontSize: 20,
+    fontWeight: '500',
   },
 });

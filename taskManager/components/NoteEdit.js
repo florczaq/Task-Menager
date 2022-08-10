@@ -29,7 +29,7 @@ const TextArea = props => {
 const ActionButtons = ({navigation}, props) => {
   const buttons = [
     {content: '❌', func: () => navigation.goBack()},
-    {content: 'Atch', func: () => navigation.goBack()},
+    // {content: 'Atch', func: () => navigation.goBack()},
     {content: '✔', func: () => navigation.navigate('Notes List')},
   ];
 

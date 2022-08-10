@@ -5,8 +5,18 @@ import {header} from '../styles/Styles';
 const Header = props => {
   return (
     <View style={header.upperContainer}>
-      <View style={header.upperBackroundRect}></View>
-      <View style={header.upperRect}>
+      <View
+        style={[
+          header.upperBackroundRect,
+          props.themeColor && {backgroundColor: `${props.themeColor}`},
+        ]}
+      ></View>
+      <View
+        style={[
+          header.upperRect,
+          props.themeColor && {backgroundColor: `${props.themeColor}`},
+        ]}
+      >
         {props.stateUpdate ? (
           <TextInput
             style={header.input}

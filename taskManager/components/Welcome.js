@@ -1,14 +1,13 @@
 import React from 'react';
+import Header from './elements/Header';
+import {general, welcomePage} from './styles/Styles';
 import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
 
-import {general, welcomePage} from './styles/Styles';
-import Header from './elements/Header';
 const buttons = [
   {name: 'My Tasks', link: 'Task List'},
   {name: 'My Notes', link: 'Notes List'},
   {name: 'New Task', link: 'Task Edit'},
   {name: 'New Note', link: 'Note Edit'},
-  // {name: 'Settings', link: ''},
 ];
 
 const Welcome = ({navigation}) => {

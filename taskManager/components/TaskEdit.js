@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import Header from './elements/Header';
+import DatePicker from 'react-native-date-picker';
+import {general, taskEdit as styles} from './styles/Styles';
 import {
   SafeAreaView,
   Text,
@@ -8,9 +11,8 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {general, taskEdit as styles} from './styles/Styles';
-import Header from './elements/Header';
-import DatePicker from 'react-native-date-picker';
+import PickColor from './elements/PickColor';
+import {colors} from './properties/colors';
 
 class RemindersList extends React.Component {
   constructor(props) {
@@ -62,12 +64,25 @@ class RemindersList extends React.Component {
     ));
   };
 
+  saveReminders = () => {
+    this.props.onSave(
+      this.state.items
+        .map(item => {
+          return item.selected ? item.content : null;
+        })
+        .filter(item => {
+          if (item !== undefined) return item;
+        })
+        .join(', '),
+    );
+  };
+
   render() {
     return (
       <Modal
+        transparent
         animationType="fade"
         visible={this.props.visible}
-        transparent={true}
         style={styles.reminderModal}
       >
         <View style={styles.reminderContainer}>
@@ -78,20 +93,10 @@ class RemindersList extends React.Component {
               </View>
             </ScrollView>
           </View>
+
           <TouchableOpacity
             style={styles.reminderCloseButton}
-            onPress={() =>
-              this.props.onSave(
-                this.state.items
-                  .map(item => {
-                    return item.selected ? item.content : null;
-                  })
-                  .filter(item => {
-                    if (item !== undefined) return item;
-                  })
-                  .join(', '),
-              )
-            }
+            onPress={this.saveReminders}
           >
             <Text style={styles.reminderCloseButtonText}>Save</Text>
           </TouchableOpacity>
@@ -103,10 +108,13 @@ class RemindersList extends React.Component {
 
 const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
+  const [openColorPicker, setOpenColorPicker] = useState(false);
+  const [reminderModalVisible, setReminderModalVisible] = useState(false);
+
   const [dateButtonText, setDateButtonText] = useState('Set Date');
   const [remindersButtonText, setRemindersButtonText] =
     useState('Set reminders');
-  const [reminderModalVisible, setReminderModalVisible] = useState(false);
+  const [themeColorText, setThemeColorText] = useState('Theme Color');
 
   const buttons = [
     {
@@ -117,12 +125,15 @@ const Buttons = props => {
       content: remindersButtonText,
       func: () => setReminderModalVisible(true),
     },
-    {content: 'Preferences', func: () => {}},
+    {
+      content: themeColorText,
+      func: () => setOpenColorPicker(true),
+    },
   ];
 
   const confirmButtons = [
     {content: '❌', func: () => props.navigation.goBack()},
-    {content: 'Atch', func: () => {}},
+    // {content: 'Atch', func: () => {}},
     {content: '✔', func: () => props.navigation.navigate('Home')},
   ];
 
@@ -151,9 +162,10 @@ const Buttons = props => {
   };
 
   const validateReminderButtonText = reminders => {
+    const MAX_TEXT_SIZE = 25;
     if (!reminders) return 'Set reminders';
-    return String(reminders).length > 25
-      ? `${reminders.toString().slice(0, 25)}...`
+    return String(reminders).length > MAX_TEXT_SIZE
+      ? `${reminders.toString().slice(0, MAX_TEXT_SIZE)}...`
       : reminders.toString();
   };
 
@@ -162,6 +174,10 @@ const Buttons = props => {
     props.setReminders(reminders);
     setRemindersButtonText(validateReminderButtonText(reminders));
   };
+
+  const saveThemeColor = selectedColor => props.setThemeColor(selectedColor);
+
+  const closeThemeColor = () => setOpenColorPicker(false);
 
   return (
     <View style={styles.buttonContainer}>
@@ -178,6 +194,11 @@ const Buttons = props => {
         onConfirm={dateSelected}
       />
       <RemindersList visible={reminderModalVisible} onSave={saveReminders} />
+      <PickColor
+        visible={openColorPicker}
+        onSave={saveThemeColor}
+        onClose={closeThemeColor}
+      />
     </View>
   );
 };
@@ -198,6 +219,7 @@ const TaskEdit = ({navigation}) => {
     description: '',
     date: '',
     reminders: [],
+    themeColor: colors.primary,
   });
 
   return (
@@ -205,6 +227,7 @@ const TaskEdit = ({navigation}) => {
       <Header
         state={task.title}
         stateUpdate={v => setTask({...task, title: v})}
+        themeColor={task.themeColor}
       />
       <View style={styles.content}>
         <Description
@@ -214,6 +237,7 @@ const TaskEdit = ({navigation}) => {
           navigation={navigation}
           setDate={date => setTask({...task, date: date})}
           setReminders={rem => setTask({...task, reminders: rem})}
+          setThemeColor={color => setTask({...task, themeColor: color})}
         />
       </View>
     </SafeAreaView>

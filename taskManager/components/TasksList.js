@@ -23,8 +23,12 @@ const MyTasks = () => {
 };
 
 const TaskList = () => {
-  const description = description =>
-    description.length > 40 ? `${description.slice(0, 40)}...` : description;
+  const validateDescription = description => {
+    const MAX_TEXT_LENGTH = 35;
+    if (description.length < MAX_TEXT_LENGTH) return description;
+    return `${description.slice(0, MAX_TEXT_LENGTH)}...`;
+  };
+
   return (
     <ScrollView style={taskList.scrollView}>
       <View style={taskList.taskContainer}>
@@ -35,7 +39,7 @@ const TaskList = () => {
               {`Date:  ${task.date.toLocaleDateString()}`}
             </Text>
             <Text style={taskList.description}>
-              {description(task.description)}
+              {validateDescription(task.description)}
             </Text>
           </TouchableOpacity>
         ))}
