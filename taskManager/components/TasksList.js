@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
-import {TaskGenerator} from './examples/ExampleData';
-import {general, taskList} from './styles/Styles';
-import Header from './elements/Header';
+import Header from './elements/general/Header';
+import { TaskGenerator } from './examples/ExampleData';
+import { general, taskList } from './styles/Styles';
 
 const tasks = TaskGenerator(20);
 

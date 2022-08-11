@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import Header from './elements/Header';
-import {general, noteList} from './styles/Styles';
-import {NotesGenerator} from './examples/ExampleData';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Header from './elements/general/Header';
+import { NotesGenerator } from './examples/ExampleData';
+import { general, noteList } from './styles/Styles';
 
 const notes = NotesGenerator(9);
 

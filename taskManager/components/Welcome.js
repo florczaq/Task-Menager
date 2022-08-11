@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './elements/Header';
+import Header from './elements/general/Header';
 import {general, welcomePage} from './styles/Styles';
 import {SafeAreaView, Text, View, TouchableOpacity} from 'react-native';
 

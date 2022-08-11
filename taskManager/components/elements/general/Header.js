@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TextInput} from 'react-native';
-import {header} from '../styles/Styles';
+import {header} from '../../styles/Styles';
 
 const Header = props => {
   return (

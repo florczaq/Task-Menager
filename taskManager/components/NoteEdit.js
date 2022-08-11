@@ -1,14 +1,7 @@
-import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  SafeAreaView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-
-import Header from './elements/Header';
-import {general, noteEdit as styles} from './styles/Styles';
+import React, { useState } from 'react';
+import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Header from './elements/general/Header';
+import { general, noteEdit as styles } from './styles/Styles';
 
 const TextArea = props => {
   const updateText = v => props.setNote({title: props.note.title, text: v});
@@ -29,7 +22,6 @@ const TextArea = props => {
 const ActionButtons = ({navigation}, props) => {
   const buttons = [
     {content: '❌', func: () => navigation.goBack()},
-    // {content: 'Atch', func: () => navigation.goBack()},
     {content: '✔', func: () => navigation.navigate('Notes List')},
   ];
 
