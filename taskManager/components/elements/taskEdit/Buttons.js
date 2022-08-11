@@ -23,7 +23,12 @@ const Buttons = props => {
 
   const confirmButtons = [
     { content: '❌', func: () => props.navigation.goBack() },
-    { content: '✔', func: () => props.navigation.navigate('Home') },
+    {
+      content: '✔', func: () => {
+        props.saveTask()
+        props.navigation.navigate('Home')
+      }
+    },
   ];
 
   const buttonsRender = buttons.map((button, i) => (

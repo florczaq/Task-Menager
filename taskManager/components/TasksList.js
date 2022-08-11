@@ -1,11 +1,52 @@
-import React from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { readData } from '../storage/LocalDataStorage';
 import Header from './elements/general/Header';
-import { TaskGenerator } from './examples/ExampleData';
-import { general, taskList } from './styles/Styles';
+import { general, taskList as styles } from './styles/Styles';
 
-const tasks = TaskGenerator(20);
+
+const TaskList = () => {
+  const [taskList, setTaskList] = useState([]);
+
+  const compressText = (text, maxLength) => {
+    if (text.length < maxLength) return text;
+    return `${String(text).slice(0, maxLength)}...`;
+  };
+
+  const convertDate = (date) => {
+    return (date ? `Date:  ${new Date(date).toLocaleDateString()}` : "No date")
+  }
+
+  useEffect(() => {
+    readData({ key: "taskList" }).then(res => {
+      setTaskList(res)
+    })
+  }, [])
+
+  return (
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.taskContainer}>
+        {taskList.map((task, i) => (
+          <TouchableOpacity key={i} style={styles.task}>
+
+            <Text style={styles.taskTitle}>
+              {compressText(task.title, 12)}
+            </Text>
+
+            <Text style={styles.date}>
+              {convertDate(task.date)}
+            </Text>
+
+            <Text style={styles.description}>
+              {compressText(task.description, 35)}
+            </Text>
+
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
 
 const MyTasks = () => {
   return (
@@ -16,29 +57,4 @@ const MyTasks = () => {
   );
 };
 
-const TaskList = () => {
-  const validateDescription = description => {
-    const MAX_TEXT_LENGTH = 35;
-    if (description.length < MAX_TEXT_LENGTH) return description;
-    return `${description.slice(0, MAX_TEXT_LENGTH)}...`;
-  };
-
-  return (
-    <ScrollView style={taskList.scrollView}>
-      <View style={taskList.taskContainer}>
-        {tasks.map((task, i) => (
-          <TouchableOpacity key={i} style={taskList.task}>
-            <Text style={taskList.taskTitle}>{task.title}</Text>
-            <Text style={taskList.date}>
-              {`Date:  ${task.date.toLocaleDateString()}`}
-            </Text>
-            <Text style={taskList.description}>
-              {validateDescription(task.description)}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
-  );
-};
 export default MyTasks;

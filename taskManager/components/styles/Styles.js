@@ -115,9 +115,10 @@ export const taskList = StyleSheet.create({
     zIndex: 4,
   },
   taskTitle: {
-    fontSize: 28,
-    width: '50%',
+    fontSize: 20,
+    width: '60%',
     textAlign: 'left',
+    fontWeight: "700",
   },
   description: {
     fontSize: 15,
