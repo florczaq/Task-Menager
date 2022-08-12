@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, font} from '../properties/colors';
+import { StyleSheet } from 'react-native';
+import { colors, font } from '../properties/colors';
 
 export const general = StyleSheet.create({
   container: {
@@ -30,7 +30,7 @@ export const header = StyleSheet.create({
     color: '#fff',
     fontSize: 50,
     textShadowColor: '#000',
-    textShadowOffset: {width: 3, height: 3},
+    textShadowOffset: { width: 3, height: 3 },
     textShadowRadius: 1,
   },
   upperBackroundRect: {
@@ -53,7 +53,7 @@ export const header = StyleSheet.create({
     minWidth: '40%',
     textAlign: 'center',
     textShadowColor: '#000',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
   },
 });
@@ -93,7 +93,7 @@ export const welcomePage = StyleSheet.create({
 export const taskList = StyleSheet.create({
   task: {
     backgroundColor: 'rgb(245,245,245)',
-    width: '90%',
+    width: '100%',
     height: 80,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -106,6 +106,7 @@ export const taskList = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     elevation: 10,
+    opacity: 0.9
   },
   taskContainer: {
     width: '100%',
@@ -119,6 +120,10 @@ export const taskList = StyleSheet.create({
     width: '60%',
     textAlign: 'left',
     fontWeight: "700",
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
   description: {
     fontSize: 15,
@@ -126,13 +131,38 @@ export const taskList = StyleSheet.create({
     textAlign: 'left',
     textAlignVertical: 'center',
     paddingLeft: '15%',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
   date: {
     fontSize: 17,
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
   scrollView: {
     width: '100%',
   },
+  gestureRecognizer: {
+    width: "100%"
+  },
+  emptyListText: {
+    color: "#000",
+    fontSize: 17,
+    fontWeight: "700",
+    color: "grey",
+    opacity: 0.5
+  },
+  emptyList: {
+    width: "100%",
+    alignItems: "center"
+  },
+  animatedView: {
+    width: "95%"
+  }
 });
 
 export const noteList = StyleSheet.create({

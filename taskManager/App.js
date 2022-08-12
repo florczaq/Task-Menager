@@ -14,8 +14,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={Welcome} />
-        <Stack.Screen name="Notes List" component={MyNotes} />
         <Stack.Screen name="Task List" component={MyTasks} />
+        <Stack.Screen name="Notes List" component={MyNotes} />
         <Stack.Screen name="Note Edit" component={NoteEdit} />
         <Stack.Screen name="Task Edit" component={TaskEdit} />
       </Stack.Navigator>
