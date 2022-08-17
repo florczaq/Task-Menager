@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-
 import { taskEdit as styles } from '../../styles/Styles';
 import PickColor from '../general/PickColor';
 import RemindersList from './ReminderList';
@@ -10,7 +9,6 @@ const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
-
   const [dateButtonText, setDateButtonText] = useState('Set Date');
   const [themeColorText, setThemeColorText] = useState('Theme Color');
   const [remindersButtonText, setRemindersButtonText] = useState('Set reminders');
@@ -22,7 +20,9 @@ const Buttons = props => {
   ];
 
   const confirmButtons = [
-    { content: '❌', func: () => props.navigation.goBack() },
+    {
+      content: '❌', func: () => props.navigation.goBack()
+    },
     {
       content: '✔', func: () => {
         props.saveTask()

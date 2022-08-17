@@ -4,7 +4,7 @@ import Header from './elements/general/Header';
 import { general, noteEdit as styles } from './styles/Styles';
 
 const TextArea = props => {
-  const updateText = v => props.setNote({title: props.note.title, text: v});
+  const updateText = v => props.setNote({ title: props.note.title, text: v });
   return (
     <View style={styles.textareaContainer}>
       <TextInput
@@ -19,16 +19,16 @@ const TextArea = props => {
   );
 };
 
-const ActionButtons = ({navigation}, props) => {
+const ActionButtons = ({ navigation }, props) => {
   const buttons = [
-    {content: '❌', func: () => navigation.goBack()},
-    {content: '✔', func: () => navigation.navigate('Notes List')},
+    { content: '❌', func: () => navigation.goBack() },
+    { content: '✔', func: () => navigation.navigate('Notes List') },
   ];
 
   return (
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.preferences}>
-        <Text style={styles.buttonText}>Preferences</Text>
+      <TouchableOpacity style={styles.themeColor}>
+        <Text style={styles.buttonText}>Theme color</Text>
       </TouchableOpacity>
       <View style={styles.confirmationButtonsContainer}>
         {buttons.map((button, i) => (
@@ -41,9 +41,9 @@ const ActionButtons = ({navigation}, props) => {
   );
 };
 
-const NoteEdit = ({navigation}, props) => {
-  const [note, setNote] = useState({title: 'New Note', text: ''});
-  const titleUpdate = v => setNote({...note, title: v});
+const NoteEdit = ({ navigation }) => {
+  const [note, setNote] = useState({ title: 'New Note', text: '' });
+  const titleUpdate = v => setNote({ ...note, title: v });
 
   return (
     <SafeAreaView style={general.container}>

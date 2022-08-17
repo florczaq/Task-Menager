@@ -16,13 +16,15 @@ const TaskEdit = ({ navigation }) => {
   });
 
   const saveTask = () => {
-    readData({ key: "taskList" }).then(res => {
-      let temp = res;
-      temp.push(task);
-      saveData({ key: "taskList", data: temp })
-    }).catch(e => {
-      saveData({ key: "taskList", data: [task] })
-    })
+    readData({ key: "taskList" })
+      .then(res => {
+        let temp = res;
+        temp.push(task);
+        saveData({ key: "taskList", data: temp })
+      })
+      .catch(e => {
+        saveData({ key: "taskList", data: [task] })
+      })
   }
 
   return (

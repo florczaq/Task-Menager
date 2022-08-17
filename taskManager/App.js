@@ -4,7 +4,7 @@ import React from 'react';
 import NoteEdit from './components/NoteEdit';
 import MyNotes from './components/NotesList';
 import TaskEdit from './components/TaskEdit';
-import MyTasks from './components/TasksList';
+import MyTasks from './components/MyTasks';
 import Welcome from './components/Welcome';
 
 const Stack = createNativeStackNavigator();

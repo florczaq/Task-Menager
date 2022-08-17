@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colors, font } from '../properties/colors';
+import { colors } from '../properties/colors';
 
 export const general = StyleSheet.create({
   container: {
@@ -86,12 +86,12 @@ export const welcomePage = StyleSheet.create({
     color: '#000',
     fontSize: 20,
     fontWeight: '400',
-    fontFamily: font,
   },
 });
 
 export const taskList = StyleSheet.create({
   task: {
+    position: "relative",
     backgroundColor: 'rgb(245,245,245)',
     width: '100%',
     height: 80,
@@ -106,13 +106,14 @@ export const taskList = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     elevation: 10,
-    opacity: 0.9
+    opacity: 0.9,
   },
   taskContainer: {
+    display: 'flex',
     width: '100%',
     alignItems: 'center',
     marginTop: '45%',
-    marginBottom: 20,
+    marginBottom: 50,
     zIndex: 4,
   },
   taskTitle: {
@@ -145,6 +146,7 @@ export const taskList = StyleSheet.create({
   },
   scrollView: {
     width: '100%',
+    height: "100%"
   },
   gestureRecognizer: {
     width: "100%"
@@ -160,7 +162,7 @@ export const taskList = StyleSheet.create({
     width: "100%",
     alignItems: "center"
   },
-  animatedView: {
+  containerView: {
     width: "95%"
   }
 });
@@ -227,18 +229,19 @@ export const noteEdit = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 23,
+    fontWeight: '600',
   },
   confirmationButtonsContainer: {
     width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  preferences: {
+  themeColor: {
     backgroundColor: '#fff',
     width: '85%',
     borderRadius: 20,
-    height: '20%',
+    height: '25%',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
