@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, Animated } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { taskList as styles } from '../../styles/Styles';
 
@@ -8,7 +8,23 @@ const MAX_LENGTH = {
   title: 22,
 };
 
+const HiddenButtons = props => {
+  return (
+    <>
+      <TouchableOpacity style={styles.editButton}>
+        <Text>Edit</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.deleteButton} onPress={props.onDelete}>
+        <Text>Delete</Text>
+      </TouchableOpacity>
+    </>
+  )
+}
+
 const Task = (props) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const slideX = React.useRef(new Animated.Value(0)).current;
 
   const compressText = (text, maxLength) => {
     if (text.length < maxLength) return text;
@@ -20,12 +36,28 @@ const Task = (props) => {
   };
 
   const onDelete = () => {
+    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true }).start(
+      ({ finished }) => { finished && (() => setExpanded(false)); }
+    );
     props.onDelete(props.id);
   };
 
+  const onSwipeLeft = (gestureState) => {
+    if (gestureState.dx > -150) return;
+    setExpanded(true);
+    Animated.spring(slideX, { toValue: -170, duration: 500, useNativeDriver: true }).start();
+  }
+
+  const onSwipeRight = (gestureState) => {
+    if (gestureState.dx < 150) return;
+    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true }).start(
+      ({ finished }) => { finished && (() => setExpanded(false)); }
+    );
+  }
+
   return (
-    <View style={styles.containerView}>
-      <GestureRecognizer style={styles.gestureRecognizer} onSwipeLeft={onDelete}>
+    <Animated.View style={[styles.containerView, { transform: [{ translateX: slideX }] }]}>
+      <GestureRecognizer style={styles.gestureRecognizer} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
         <TouchableOpacity style={[styles.task, { backgroundColor: props.themeColor }]}>
           <Text style={styles.taskTitle}>
             {compressText(props.title, MAX_LENGTH.title)}
@@ -38,7 +70,10 @@ const Task = (props) => {
           </Text>
         </TouchableOpacity>
       </GestureRecognizer>
-    </View>
+      {expanded &&
+        <HiddenButtons onDelete={onDelete} />
+      }
+    </Animated.View>
   );
 }
 

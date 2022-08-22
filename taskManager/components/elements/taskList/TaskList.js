@@ -5,11 +5,10 @@ import { taskList as styles } from '../../styles/Styles';
 import Task from './Task';
 
 class TaskList extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      tasks: [],
     }
   }
 
@@ -20,23 +19,19 @@ class TaskList extends React.Component {
 
   componentDidMount = () => this.reloadTasks();
 
-  onSwipeLeft = (id) => {
-    const newList = this.state.tasks.filter((element, index) => {
-      return index != id})
+  onDelete = (id) => {
+    const newList = this.state.tasks.filter((element, index) => { return index != id })
 
     saveData({
       key: "taskList",
       data: newList
     })
-
-    this.setState({tasks: newList})
-
+    this.setState({ tasks: newList })
     this.reloadTasks();
-    this.forceUpdate();
   }
 
   renderItems = () => this.state.tasks.map((task, i) => (
-    <Task {...task} key={i} id={i} onDelete={this.onSwipeLeft} />
+    <Task {...task} key={i} id={i} onDelete={this.onDelete} />
   ))
 
   render() {

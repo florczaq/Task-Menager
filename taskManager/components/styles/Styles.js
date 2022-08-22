@@ -142,7 +142,7 @@ export const taskList = StyleSheet.create({
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
+    textShadowRadius: 2,
   },
   scrollView: {
     width: '100%',
@@ -163,8 +163,35 @@ export const taskList = StyleSheet.create({
     alignItems: "center"
   },
   containerView: {
-    width: "95%"
-  }
+    width: "97%",
+    flexDirection: 'row'
+  },
+  editButton: {
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffb703",
+    marginLeft: 10,
+    marginVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "grey",
+    elevation: 5,
+  },
+  deleteButton: {
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#d90429",
+    marginLeft: 5,
+    marginVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "grey",
+    elevation: 5,
+  },
 });
 
 export const noteList = StyleSheet.create({
@@ -192,16 +219,14 @@ export const noteList = StyleSheet.create({
 
 export const noteEdit = StyleSheet.create({
   textarea: {
-    width: '95%',
-    minHeight: '40%',
-    maxHeight: '90%',
+    width: '100%',
+    height: "100%",
     borderWidth: 1,
     textAlignVertical: 'top',
-    padding: 10,
-    borderColor: 'grey',
+    paddingHorizontal: 20,
+    borderColor: 'rgba(0,0,0,0.5)',
     fontSize: 25,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   textareaContainer: {
     width: '100%',
