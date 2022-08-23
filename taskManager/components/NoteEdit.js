@@ -35,6 +35,7 @@ const NoteEdit = ({ navigation }) => {
   const titleUpdate = v => setNote({ ...note, title: v });
   const themeColorUpdate = v => setNote({ ...note, themeColor: v });
   const textUpdate = v => setNote({ ...note, text: v });
+  
   return (
     <SafeAreaView style={general.container}>
       <Header state={note.title} stateUpdate={titleUpdate} themeColor={note.themeColor}/>

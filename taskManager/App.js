@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import NoteEdit from './components/NoteEdit';
-import MyNotes from './components/NotesList';
+import MyNotes from './components/MyNotes';
 import TaskEdit from './components/TaskEdit';
 import MyTasks from './components/MyTasks';
 import Welcome from './components/Welcome';

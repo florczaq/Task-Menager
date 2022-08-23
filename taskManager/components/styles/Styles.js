@@ -113,7 +113,7 @@ export const taskList = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: '45%',
-    marginBottom: 50,
+    marginBottom: 130,
     zIndex: 4,
   },
   taskTitle: {
@@ -198,7 +198,7 @@ export const noteList = StyleSheet.create({
   noteContainer: {
     width: '100%',
     marginTop: '50%',
-    marginBottom: 10,
+    marginBottom: 100,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -475,3 +475,26 @@ export const colorPicker = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+export const newElementButton = StyleSheet.create({
+  newElementButton: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    backgroundColor: colors.primary,
+    bottom: 20,
+    zIndex: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#777",
+    elevation: 10,
+    opacity: 0.8,
+  },
+  newElementButtonText: {
+    fontSize: 60,
+    color: "#fff",
+    fontWeight: '800',
+  }
+})

@@ -4,6 +4,7 @@ import { KEYS, readData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
 import Note from './elements/noteList/Note';
 import { general, noteList as styles } from './styles/Styles';
+import CreateNewElement from './elements/general/CreateNewElement';
 
 const EmptyListText = () => {
   return (
@@ -15,12 +16,11 @@ const EmptyListText = () => {
 
 const NoteList = props => {
   const [notes, setNotes] = React.useState([]);
+
   React.useEffect(() => {
-    readData({ key: KEYS.NOTES }).then(res => {
-      setNotes(res);
-    }).catch(err => {
-      console.log(err);
-    })
+    readData({ key: KEYS.NOTES })
+      .then(res => setNotes(res))
+      .catch(err => console.log(err))
   }, []);
 
   const renderItems = notes.map((note, i) => (
@@ -30,21 +30,20 @@ const NoteList = props => {
   return (
     <ScrollView>
       <View style={styles.noteContainer}>
-        {
-          notes.length
-            ? renderItems
-            : <EmptyListText />
-        }
+        {notes.length
+          ? renderItems
+          : <EmptyListText />}
       </View>
     </ScrollView>
   );
 };
 
-const MyNotes = props => {
+const MyNotes = ({ navigation }) => {
   return (
     <SafeAreaView style={general.container}>
       <Header text="My Notes" />
       <NoteList />
+      <CreateNewElement navigation={navigation} destination={'Note Edit'} />
     </SafeAreaView>
   );
 };
