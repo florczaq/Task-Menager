@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { readData, removeData, saveData } from "../storage/LocalDataStorage";
+import { SafeAreaView, TextInput, View } from 'react-native';
+import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
 import Buttons from "./elements/taskEdit/Buttons";
 import { colors } from './properties/colors';
@@ -16,14 +16,14 @@ const TaskEdit = ({ navigation }) => {
   });
 
   const saveTask = () => {
-    readData({ key: "taskList" })
+    readData({ key: KEYS.TASKS })
       .then(res => {
         let temp = res;
         temp.push(task);
-        saveData({ key: "taskList", data: temp })
+        saveData({ key: KEYS.TASKS, data: temp })
       })
       .catch(e => {
-        saveData({ key: "taskList", data: [task] })
+        saveData({ key: KEYS.TASKS, data: [task] })
       })
   }
 

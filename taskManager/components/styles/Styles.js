@@ -207,26 +207,60 @@ export const noteList = StyleSheet.create({
     width: '40%',
     height: 250,
     backgroundColor: 'lightgrey',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginHorizontal: 10,
     marginBottom: 15,
     borderRadius: 10,
     borderWidth: 3,
     borderColor: 'grey',
+    opacity: 0.95
   },
+  emptyListText: {
+    color: "#000",
+    fontSize: 17,
+    fontWeight: "700",
+    color: "grey",
+    opacity: 0.5
+  },
+  emptyList: {
+    width: "100%",
+    alignItems: "center"
+  },
+  noteTitle: {
+    paddingVertical: 10,
+    height: "20%",
+    width: "90%",
+    borderBottomWidth: 2,
+  },
+  noteText: {
+    height: "70%",
+    padding: 10,
+    width: "95%"
+  },
+  noteTitleText: {
+    fontSize: 20,
+    width: "100%",
+    color: "#fff",
+    textAlign: 'center'
+  },
+  noteTextText: {
+    fontSize: 13,
+    width: "100%",
+    color: "#fff",
+  }
 });
 
 export const noteEdit = StyleSheet.create({
   textarea: {
     width: '100%',
     height: "100%",
-    borderWidth: 1,
     textAlignVertical: 'top',
     paddingHorizontal: 20,
     borderColor: 'rgba(0,0,0,0.5)',
     fontSize: 25,
     backgroundColor: 'rgba(255,255,255,0.3)',
+    elevation: 1
   },
   textareaContainer: {
     width: '100%',

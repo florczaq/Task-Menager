@@ -70,9 +70,7 @@ const Task = (props) => {
           </Text>
         </TouchableOpacity>
       </GestureRecognizer>
-      {expanded &&
-        <HiddenButtons onDelete={onDelete} />
-      }
+      {expanded && <HiddenButtons onDelete={onDelete} />}
     </Animated.View>
   );
 }

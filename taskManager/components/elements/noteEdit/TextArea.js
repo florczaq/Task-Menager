@@ -3,7 +3,7 @@ import { TextInput, View } from 'react-native';
 import { noteEdit as styles } from '../../styles/Styles';
 
 const TextArea = props => {
-  const updateText = v => props.setNote({ title: props.note.title, text: v });
+  const updateText = v => props.setNote(v);
   return (
     <View style={styles.textareaContainer}>
       <TextInput

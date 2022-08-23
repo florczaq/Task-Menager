@@ -7,6 +7,11 @@ const storage = new Storage({
   defaultExpires: null,
 });
 
+export const KEYS = {
+  TASKS: "taskList",
+  NOTES: "noteList"
+}
+
 export const saveData = async ({ key, data }) => {
   try {
     storage.save({ key: key, data: data })
