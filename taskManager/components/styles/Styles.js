@@ -232,6 +232,7 @@ export const noteList = StyleSheet.create({
     height: "20%",
     width: "90%",
     borderBottomWidth: 2,
+    borderColor: "#fff"
   },
   noteText: {
     height: "70%",
@@ -248,6 +249,19 @@ export const noteList = StyleSheet.create({
     fontSize: 13,
     width: "100%",
     color: "#fff",
+  },
+  selectedNote :{
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.6
+  },
+  selectionImg: {
+    position: "absolute",
+    zIndex: 3,
+    width: 50,
+    height: 50,
+    top: -20,
+    right: -20
   }
 });
 
@@ -490,11 +504,18 @@ export const newElementButton = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#777",
     elevation: 10,
-    opacity: 0.8,
+    opacity: 0.9,
   },
   newElementButtonText: {
     fontSize: 60,
     color: "#fff",
     fontWeight: '800',
+  },
+  closeSelectedMode: {
+    left: 100,
+  },
+  deleteSelectedItems: {
+    right: 100,
+
   }
 })

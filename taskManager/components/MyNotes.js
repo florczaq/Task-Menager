@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { KEYS, readData } from "../storage/LocalDataStorage";
+import CreateNewElement from './elements/general/CreateNewElement';
 import Header from './elements/general/Header';
 import Note from './elements/noteList/Note';
 import { general, noteList as styles } from './styles/Styles';
-import CreateNewElement from './elements/general/CreateNewElement';
 
 const EmptyListText = () => {
   return (
@@ -24,7 +24,13 @@ const NoteList = props => {
   }, []);
 
   const renderItems = notes.map((note, i) => (
-    <Note {...note} id={i} key={i} />
+    <Note
+      {...note}
+      id={i}
+      key={i}
+      openSelectionMode={props.openSelectionMode}
+      selectionMode={props.selectionMode} />
+
   ))
 
   return (
@@ -39,11 +45,21 @@ const NoteList = props => {
 };
 
 const MyNotes = ({ navigation }) => {
+  const [selectionMode, setSelectionMode] = useState(false);
+
   return (
     <SafeAreaView style={general.container}>
       <Header text="My Notes" />
-      <NoteList />
-      <CreateNewElement navigation={navigation} destination={'Note Edit'} />
+      <NoteList
+        openSelectionMode={() => setSelectionMode(true)}
+        selectionMode={selectionMode}
+      />
+      <CreateNewElement
+        navigation={navigation}
+        destination={'Note Edit'}
+        selectionMode={selectionMode}
+        closeSelectionMode={() => setSelectionMode(false)}
+      />
     </SafeAreaView>
   );
 };
