@@ -197,14 +197,14 @@ export const taskList = StyleSheet.create({
 export const noteList = StyleSheet.create({
   noteContainer: {
     width: '100%',
-    marginTop: '50%',
+    marginTop: 180,
     marginBottom: 100,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
   },
   note: {
-    width: '40%',
+    width: 150,
     height: 250,
     backgroundColor: 'lightgrey',
     justifyContent: 'flex-start',
@@ -240,7 +240,7 @@ export const noteList = StyleSheet.create({
     width: "95%"
   },
   noteTitleText: {
-    fontSize: 20,
+    fontSize: 15,
     width: "100%",
     color: "#fff",
     textAlign: 'center'

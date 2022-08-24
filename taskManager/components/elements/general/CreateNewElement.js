@@ -2,9 +2,9 @@ import React from "react"
 import { Text, TouchableOpacity } from "react-native"
 import { newElementButton as styles } from '../../styles/Styles'
 
-const CreateNewElement = (props, { destination, navigation }) => {
+const CreateNewElement = (props) => {
   const onPress = () => {
-    navigation.navigate(destination);
+    props.navigation.navigate(props.destination);
   }
 
   return (
@@ -17,7 +17,7 @@ const CreateNewElement = (props, { destination, navigation }) => {
           <Text style={[styles.newElementButtonText, { fontSize: 15 }]} >CLOSE</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={props.closeSelectionMode}
+          onPress={props.deleteSelectedItems}
           style={[styles.newElementButton, styles.deleteSelectedItems]}
         >
           <Text style={[styles.newElementButtonText, { fontSize: 15 }]} >DELETE</Text>

@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { noteList as styles } from '../../styles/Styles';
 
 const MAX_LENGTH = {
-  title: 10,
+  title: 15,
 }
 
 const IMAGES = {
@@ -14,7 +14,10 @@ const IMAGES = {
 const Note = props => {
   const [selected, setSelected] = useState(false);
 
-  const switchSelection = () => setSelected(selected ? false : true)
+  const switchSelection = () => {
+    setSelected(selected ? false : true)
+    props.onSelection(props.id);
+  }
 
   const compressText = (txt, length) => {
     return txt.length > length ? `${String(txt).slice(0, length)}...` : txt;
@@ -23,6 +26,11 @@ const Note = props => {
   useEffect(() => {
     if (!props.selectionMode) setSelected(false);
   })
+
+  const longPressAction = () => {
+    props.openSelectionMode(props.id)
+    setSelected(true);
+  }
 
   return (
     <TouchableOpacity
@@ -33,10 +41,7 @@ const Note = props => {
           props.selectionMode && switchSelection()
         }
       }
-      onLongPress={() => {
-        props.openSelectionMode(true)
-        setSelected(true)
-      }}
+      onLongPress={longPressAction}
     >
       {
         props.selectionMode && (selected

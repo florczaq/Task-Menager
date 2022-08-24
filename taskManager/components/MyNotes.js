@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import { KEYS, readData } from "../storage/LocalDataStorage";
+import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import CreateNewElement from './elements/general/CreateNewElement';
 import Header from './elements/general/Header';
 import Note from './elements/noteList/Note';
@@ -14,51 +14,81 @@ const EmptyListText = () => {
   )
 }
 
-const NoteList = props => {
-  const [notes, setNotes] = React.useState([]);
+const MyNotes = ({ navigation }) => {
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [notes, setNotes] = useState([]);
 
-  React.useEffect(() => {
+  const reloadNotes = () => {
     readData({ key: KEYS.NOTES })
       .then(res => setNotes(res))
       .catch(err => console.log(err))
-  }, []);
+  }
+
+  useEffect(() => { reloadNotes(); }, []);
+
+  const openSelectionMode = (id) => {
+    !selectionMode && setSelectionMode(true);
+    setSelectedItems([id]);
+  }
+
+  const onSelection = (selectedNoteId) => {
+    let index = selectedItems.indexOf(selectedNoteId);
+    setSelectedItems(prev => index == -1
+      ? [...prev, selectedNoteId]
+      : selectedItems.filter(
+        (value) => {
+          return value !== selectedNoteId
+        }
+      ));
+  }
+
+  const closeSelectionMode = () => {
+    setSelectionMode(false);
+    setSelectedItems([]);
+  }
+
+  const deleteSelectedItems = () => {
+    readData({ key: KEYS.NOTES }).then(res => {
+      saveData({
+        key: KEYS.NOTES, data: res.filter(
+          (value, index) => { return selectedItems.indexOf(index) == -1; }
+        )
+      })
+      closeSelectionMode();
+      reloadNotes();
+    }).catch(err => {
+      console.warn(err);
+    })
+  }
 
   const renderItems = notes.map((note, i) => (
     <Note
       {...note}
       id={i}
       key={i}
-      openSelectionMode={props.openSelectionMode}
-      selectionMode={props.selectionMode} />
-
+      openSelectionMode={openSelectionMode}
+      selectionMode={selectionMode}
+      onSelection={onSelection}
+    />
   ))
-
-  return (
-    <ScrollView>
-      <View style={styles.noteContainer}>
-        {notes.length
-          ? renderItems
-          : <EmptyListText />}
-      </View>
-    </ScrollView>
-  );
-};
-
-const MyNotes = ({ navigation }) => {
-  const [selectionMode, setSelectionMode] = useState(false);
 
   return (
     <SafeAreaView style={general.container}>
       <Header text="My Notes" />
-      <NoteList
-        openSelectionMode={() => setSelectionMode(true)}
-        selectionMode={selectionMode}
-      />
+      <ScrollView>
+        <View style={styles.noteContainer}>
+          {notes.length
+            ? renderItems
+            : <EmptyListText />}
+        </View>
+      </ScrollView>
       <CreateNewElement
+        destination='Note Edit'
         navigation={navigation}
-        destination={'Note Edit'}
         selectionMode={selectionMode}
-        closeSelectionMode={() => setSelectionMode(false)}
+        closeSelectionMode={closeSelectionMode}
+        deleteSelectedItems={deleteSelectedItems}
       />
     </SafeAreaView>
   );
