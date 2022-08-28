@@ -34,17 +34,26 @@ class TaskList extends React.Component {
     <Task {...task} key={i} id={i} onDelete={this.onDelete} />
   ))
 
+  EmptyTaskList = () => {
+    return (
+      <View style={styles.emptyList}>
+        <Text style={styles.emptyListText}>No task created.</Text>
+      </View>
+    )
+  }
+
   render() {
     return (
-      <ScrollView scrollEnabled style={styles.scrollView} contentContainerStyle={{
-        alignItems: "center"
-      }}>
+      <ScrollView
+        scrollEnabled
+        style={styles.scrollView}
+        contentContainerStyle={{ alignItems: "center" }}
+      >
         <View style={styles.taskContainer}>
-          {this.state.tasks.length ?
-            this.renderItems() :
-            <View style={styles.emptyList}>
-              <Text style={styles.emptyListText}>No task created.</Text>
-            </View>
+          {
+            this.state.tasks.length
+              ? this.renderItems()
+              : this.EmptyTaskList()
           }
         </View>
       </ScrollView>

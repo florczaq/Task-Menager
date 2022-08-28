@@ -10,7 +10,7 @@ import Welcome from './components/Welcome';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  return (
+  return ( 
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Home" component={Welcome} />

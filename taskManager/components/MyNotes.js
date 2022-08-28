@@ -9,7 +9,7 @@ import { general, noteList as styles } from './styles/Styles';
 const EmptyListText = () => {
   return (
     <View style={styles.emptyList}>
-      <Text style={styles.emptyListText}>No notes created.</Text>
+      <Text style={styles.emptyListText}>No note created.</Text>
     </View>
   )
 }
@@ -62,6 +62,10 @@ const MyNotes = ({ navigation }) => {
     })
   }
 
+  const itemIsSelected = (itemId) =>{
+    return selectedItems.indexOf(itemId) != -1;
+  }
+
   const renderItems = notes.map((note, i) => (
     <Note
       {...note}
@@ -69,20 +73,29 @@ const MyNotes = ({ navigation }) => {
       key={i}
       openSelectionMode={openSelectionMode}
       selectionMode={selectionMode}
+      selected={itemIsSelected(i)}
       onSelection={onSelection}
+      selectedItems={selectedItems}
+      navigation={navigation}
     />
   ))
+
+  const myList = (
+    <ScrollView>
+      <View style={styles.noteContainer}>
+        {
+          notes.length
+            ? renderItems
+            : <EmptyListText />
+        }
+      </View>
+    </ScrollView>
+  )
 
   return (
     <SafeAreaView style={general.container}>
       <Header text="My Notes" />
-      <ScrollView>
-        <View style={styles.noteContainer}>
-          {notes.length
-            ? renderItems
-            : <EmptyListText />}
-        </View>
-      </ScrollView>
+      {myList}
       <CreateNewElement
         destination='Note Edit'
         navigation={navigation}

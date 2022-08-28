@@ -21,8 +21,7 @@ export const saveData = async ({ key, data }) => {
 }
 
 export const readData = async ({ key }) => {
-  const res = await storage.load({ key });
-  return res;
+  return await storage.load({ key })
 }
 
 export const removeData = ({ key }) => {

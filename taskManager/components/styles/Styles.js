@@ -102,7 +102,6 @@ export const taskList = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    overflow: 'hidden',
     borderWidth: 1,
     borderRadius: 10,
     elevation: 10,
@@ -124,7 +123,7 @@ export const taskList = StyleSheet.create({
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
+    textShadowRadius: 8,
   },
   description: {
     fontSize: 15,
@@ -135,14 +134,14 @@ export const taskList = StyleSheet.create({
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 1,
+    textShadowRadius: 8,
   },
   date: {
     fontSize: 17,
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+    textShadowRadius: 8,
   },
   scrollView: {
     width: '100%',
@@ -192,6 +191,14 @@ export const taskList = StyleSheet.create({
     borderColor: "grey",
     elevation: 5,
   },
+  hiddenButtonText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
+    textShadowColor: "#000",
+    textShadowOffset: {width: 0, height: 0},
+    textShadowRadius: 8,
+  }
 });
 
 export const noteList = StyleSheet.create({
@@ -241,16 +248,18 @@ export const noteList = StyleSheet.create({
   },
   noteTitleText: {
     fontSize: 15,
+    fontWeight: '800',
     width: "100%",
     color: "#fff",
     textAlign: 'center'
   },
   noteTextText: {
     fontSize: 13,
+    fontWeight: '700',
     width: "100%",
     color: "#fff",
   },
-  selectedNote :{
+  selectedNote: {
     justifyContent: "center",
     alignItems: "center",
     opacity: 0.6
@@ -262,7 +271,8 @@ export const noteList = StyleSheet.create({
     height: 50,
     top: -20,
     right: -20
-  }
+  },
+
 });
 
 export const noteEdit = StyleSheet.create({

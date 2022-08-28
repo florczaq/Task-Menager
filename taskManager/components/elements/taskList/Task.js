@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, Animated } from 'react-native';
+import { Text, TouchableOpacity, View, Animated, StyleSheet } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { taskList as styles } from '../../styles/Styles';
 
@@ -9,13 +9,14 @@ const MAX_LENGTH = {
 };
 
 const HiddenButtons = props => {
+
   return (
     <>
       <TouchableOpacity style={styles.editButton}>
-        <Text>Edit</Text>
+        <Text style={styles.hiddenButtonText}>Edit</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.deleteButton} onPress={props.onDelete}>
-        <Text>Delete</Text>
+        <Text style={styles.hiddenButtonText}>Delete</Text>
       </TouchableOpacity>
     </>
   )
@@ -36,9 +37,8 @@ const Task = (props) => {
   };
 
   const onDelete = () => {
-    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true }).start(
-      ({ finished }) => { finished && (() => setExpanded(false)); }
-    );
+    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true })
+      .start(({ finished }) => { finished && (() => setExpanded(false)); });
     props.onDelete(props.id);
   };
 
