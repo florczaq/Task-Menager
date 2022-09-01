@@ -30,8 +30,18 @@ class TaskList extends React.Component {
     this.reloadTasks();
   }
 
+  onEdit = (id) => {
+    this.props.navigation.navigate("Task Edit", {taskId: id})
+  }
+
   renderItems = () => this.state.tasks.map((task, i) => (
-    <Task {...task} key={i} id={i} onDelete={this.onDelete} />
+    <Task
+      {...task}
+      key={i}
+      id={i}
+      onDelete={this.onDelete} 
+      onEdit={this.onEdit}  
+      />
   ))
 
   EmptyTaskList = () => {

@@ -9,7 +9,7 @@ const MyTasks = ({navigation}) => {
   return (
     <SafeAreaView style={general.container}>
       <Header text="My Tasks" />
-      <TaskList />
+      <TaskList navigation={navigation}/>
       <CreateNewElement destination={'Task Edit'} navigation={navigation}/>
     </SafeAreaView>
   );

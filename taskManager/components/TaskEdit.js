@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
 import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
@@ -6,7 +6,7 @@ import Buttons from "./elements/taskEdit/Buttons";
 import { colors } from './properties/colors';
 import { general, taskEdit as styles } from './styles/Styles';
 
-const TaskEdit = ({ navigation }) => {
+const TaskEdit = ({ route, navigation }) => {
   const [task, setTask] = useState({
     title: 'New Task',
     description: '',
@@ -15,11 +15,31 @@ const TaskEdit = ({ navigation }) => {
     themeColor: colors.primary,
   });
 
+
+  const validateTaskId = () => {
+    try { return route.params.taskId; }
+    catch (e) { return undefined; }
+  }
+
+  const taskId = validateTaskId();
+
+  const loadTaskFromMemoryById = (id) => {
+    readData({ key: KEYS.TASKS })
+      .then(res => { setTask(res[id]) })
+      .catch(err => { console.error(err) })
+  }
+
+  useEffect(() => {
+    taskId != undefined && loadTaskFromMemoryById(taskId)
+  }, []);
+
   const saveTask = () => {
     readData({ key: KEYS.TASKS })
       .then(res => {
         let temp = res;
-        temp.push(task);
+        taskId != undefined
+          ? temp[taskId] = task
+          : temp.push(task);
         saveData({ key: KEYS.TASKS, data: temp })
       })
       .catch(e => {
