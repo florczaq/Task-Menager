@@ -8,9 +8,10 @@ const MAX_LENGTH = {
   title: 22,
 };
 
-const HiddenButtons = props => {
+const HiddenButtons = ({ visible }, props) => {
 
   return (
+    visible &&
     <>
       <TouchableOpacity style={styles.editButton}>
         <Text style={styles.hiddenButtonText}>Edit</Text>
@@ -60,17 +61,27 @@ const Task = (props) => {
       <GestureRecognizer style={styles.gestureRecognizer} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
         <TouchableOpacity style={[styles.task, { backgroundColor: props.themeColor }]}>
           <Text style={styles.taskTitle}>
-            {compressText(props.title, MAX_LENGTH.title)}
+            {
+              compressText(props.title, MAX_LENGTH.title)
+            }
           </Text>
           <Text style={styles.date}>
-            {convertDate(props.date)}
+            {
+              convertDate(props.date)
+            }
           </Text>
           <Text style={styles.description}>
-            {compressText(props.description, MAX_LENGTH.description)}
+            {
+              compressText(props.description, MAX_LENGTH.description)
+            }
           </Text>
         </TouchableOpacity>
       </GestureRecognizer>
-      {expanded && <HiddenButtons onDelete={onDelete} />}
+      <HiddenButtons
+        onDelete={onDelete}
+        visible={expanded}
+      />
+
     </Animated.View>
   );
 }

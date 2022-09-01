@@ -57,9 +57,7 @@ const Buttons = props => {
 
   const validateReminderButtonText = reminders => {
     if (!reminders) return 'Set reminders';
-
     const MAX_LENGTH = 25;
-
     return (
       String(reminders).length > MAX_LENGTH
         ? `${reminders.toString().slice(0, MAX_LENGTH)}...`
@@ -89,6 +87,7 @@ const Buttons = props => {
         minimumDate={new Date()}
         onCancel={() => setOpenDate(false)}
         onConfirm={dateSelected}
+        theme="light"
       />
       <RemindersList visible={reminderModalVisible} onSave={saveReminders} />
       <PickColor
