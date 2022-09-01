@@ -30,7 +30,7 @@ const NoteEdit = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    selectedNoteId && loadNoteFromMemory(selectedNoteId);
+    selectedNoteId != undefined && loadNoteFromMemory(selectedNoteId);
   }, [])
 
   const saveNote = () => {
@@ -41,7 +41,7 @@ const NoteEdit = ({ route, navigation }) => {
       .then(
         res => {
           let temp = res;
-          selectedNoteId
+          selectedNoteId != undefined
             ? temp[selectedNoteId] = note
             : temp.push(note);
           saveNoteInMemory(temp);
