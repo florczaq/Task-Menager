@@ -1,12 +1,12 @@
+import notifee, { TriggerType } from "@notifee/react-native";
 import React, { useEffect, useState } from 'react';
-import { InputAccessoryView, SafeAreaView, TextInput, View } from 'react-native';
+import { SafeAreaView, TextInput, View } from 'react-native';
+import uuid from 'react-native-uuid';
 import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
 import Buttons from "./elements/taskEdit/Buttons";
 import { colors } from './properties/colors';
 import { general, taskEdit as styles } from './styles/Styles';
-import uuid from 'react-native-uuid'
-import notifee, { TriggerType, TimestampTrigger } from "@notifee/react-native"
 
 async function createReminderNotification({ date, title, description, triggerId }) {
   const channelId = await notifee.createChannel({
@@ -56,7 +56,6 @@ const TaskEdit = ({ route, navigation }) => {
   }
 
   useEffect(() => {
-    console.log()
     taskId != undefined && loadTaskFromMemoryById(taskId)
   }, []);
 
@@ -93,8 +92,16 @@ const TaskEdit = ({ route, navigation }) => {
             hours: element
           })),
         triggerId: `${task.id}-${element}`
-      }).catch(err => console.error(err))
+      }).catch(err => {
+        console.error(err)
+        alert("Something went wrong with saving reminders. Make sure all reimnders are in the future.")
+      })
     })
+
+    // notifee.getTriggerNotifications()
+    //   .then(res => {
+    //     console.log(res)
+    //   })
   }
 
   const saveTask = () => {
