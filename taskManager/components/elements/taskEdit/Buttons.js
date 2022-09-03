@@ -57,11 +57,12 @@ const Buttons = props => {
 
   const validateReminderButtonText = reminders => {
     if (!reminders) return 'Set reminders';
-    const MAX_LENGTH = 25;
-    return (
-      String(reminders).length > MAX_LENGTH
-        ? `${reminders.toString().slice(0, MAX_LENGTH)}...`
-        : reminders.toString())
+    // const MAX_LENGTH = 25;
+    // const parsedRemindersToString = reminders.join(', ')
+    return (reminders.join(', '))
+    // parsedRemindersToString.length > MAX_LENGTH
+    //   ? `${parsedRemindersToString.slice(0, MAX_LENGTH)}...`
+    //   : parsedRemindersToString
   };
 
   const saveReminders = reminders => {
@@ -89,7 +90,10 @@ const Buttons = props => {
         onConfirm={dateSelected}
         theme="light"
       />
-      <RemindersList visible={reminderModalVisible} onSave={saveReminders} />
+      <RemindersList
+        visible={reminderModalVisible}
+        onSave={saveReminders}
+      />
       <PickColor
         visible={openColorPicker}
         onSave={saveThemeColor}

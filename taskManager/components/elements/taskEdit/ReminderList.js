@@ -7,16 +7,16 @@ export default class RemindersList extends React.Component {
     super(props);
     this.state = {
       items: [
-        { content: '24 h', selected: false },
-        { content: '12 h', selected: false },
-        { content: '6 h', selected: false },
-        { content: '4 h', selected: false },
-        { content: '2 h', selected: false },
-        { content: '1 h', selected: false },
-        { content: '30 min', selected: false },
-        { content: '15 min', selected: false },
-        { content: '10 min', selected: false },
-        { content: '5 min', selected: false },
+        { content: 24, selected: false, },
+        { content: 12, selected: false },
+        { content: 6, selected: false },
+        { content: 4, selected: false },
+        { content: 2, selected: false },
+        { content: 1, selected: false },
+        // { content: '30 min', selected: false },
+        // { content: '15 min', selected: false },
+        // { content: '10 min', selected: false },
+        // { content: '5 min', selected: false },
       ],
     };
     this.itemSelected = this.itemSelected.bind(this);
@@ -46,7 +46,7 @@ export default class RemindersList extends React.Component {
             styles[`_reminderButtonTextSelected_${item.selected}`],
           ]}
         >
-          {item.content}
+          {`${item.content} h`}
         </Text>
       </TouchableOpacity>
     ));
@@ -61,7 +61,6 @@ export default class RemindersList extends React.Component {
         .filter(item => {
           if (item !== undefined) return item;
         })
-        .join(', '),
     );
   };
 

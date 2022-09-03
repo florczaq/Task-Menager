@@ -179,26 +179,29 @@ export const taskList = StyleSheet.create({
     elevation: 5,
   },
   deleteButton: {
-    width: 80,
+    width: 100,
     height: 80,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#d90429",
-    marginLeft: 5,
+    marginLeft: 10,
     marginVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "grey",
     elevation: 5,
   },
-  hiddenButtonText: {
-    color: "#fff",
-    fontSize: 15,
-    fontWeight: "700",
-    textShadowColor: "#000",
-    textShadowOffset: {width: 0, height: 0},
-    textShadowRadius: 8,
+  hiddenButtonImg:{
+    transform: [{scale: 0.5}]
   }
+  // hiddenButtonText: {
+  //   color: "#fff",
+  //   fontSize: 15,
+  //   fontWeight: "700",
+  //   textShadowColor: "#000",
+  //   textShadowOffset: {width: 0, height: 0},
+  //   textShadowRadius: 8,
+  // }
 });
 
 export const noteList = StyleSheet.create({

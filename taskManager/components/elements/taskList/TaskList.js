@@ -1,74 +1,71 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { readData, saveData } from '../../../storage/LocalDataStorage';
 import { taskList as styles } from '../../styles/Styles';
 import Task from './Task';
 
-class TaskList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: [],
-    }
-  }
 
-  reloadTasks = () => {
+const EmptyTaskList = () => {
+  return (
+    <View style={styles.emptyList}>
+      <Text style={styles.emptyListText}>No task created.</Text>
+    </View>
+  )
+}
+
+const TaskList = (props) => {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    reloadTasks();
+  })
+
+  const reloadTasks = () => {
     readData({ key: "taskList" })
-      .then(res => this.setState({ tasks: res }))
+      .then(res => setTasks(res))
   }
 
-  componentDidMount = () => this.reloadTasks();
-
-  onDelete = (id) => {
-    const newList = this.state.tasks.filter((element, index) => { return index != id })
+  const onDelete = (id) => {
+    const newList = tasks.filter((element, index) => {
+      return index != id
+    })
 
     saveData({
       key: "taskList",
       data: newList
     })
-    this.setState({ tasks: newList })
-    this.reloadTasks();
+    setTasks(newList)
+    reloadTasks();
   }
 
-  onEdit = (id) => {
-    this.props.navigation.navigate("Task Edit", {taskId: id})
+  const onEdit = (id) => {
+    props.navigation.navigate("Task Edit", { taskId: id })
   }
 
-  renderItems = () => this.state.tasks.map((task, i) => (
+  const renderItems = tasks.map((task, i) => (
     <Task
       {...task}
       key={i}
       id={i}
-      onDelete={this.onDelete} 
-      onEdit={this.onEdit}  
-      />
+      onDelete={onDelete}
+      onEdit={onEdit}
+    />
   ))
 
-  EmptyTaskList = () => {
-    return (
-      <View style={styles.emptyList}>
-        <Text style={styles.emptyListText}>No task created.</Text>
-      </View>
-    )
-  }
+  const content = tasks.length
+    ? renderItems
+    : <EmptyTaskList />
 
-  render() {
-    return (
-      <ScrollView
-        scrollEnabled
-        style={styles.scrollView}
-        contentContainerStyle={{ alignItems: "center" }}
-      >
-        <View style={styles.taskContainer}>
-          {
-            this.state.tasks.length
-              ? this.renderItems()
-              : this.EmptyTaskList()
-          }
-        </View>
-      </ScrollView>
-    );
-  }
-};
+  return (
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={{ alignItems: "center" }}
+    >
+      <View style={styles.taskContainer}>
+        {content}
+      </View>
+    </ScrollView>
+  );
+}
 
 export default TaskList;

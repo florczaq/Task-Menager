@@ -1,20 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, TextInput, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { InputAccessoryView, SafeAreaView, TextInput, View } from 'react-native';
 import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
 import Buttons from "./elements/taskEdit/Buttons";
 import { colors } from './properties/colors';
 import { general, taskEdit as styles } from './styles/Styles';
+import uuid from 'react-native-uuid'
+import notifee, { TriggerType, TimestampTrigger } from "@notifee/react-native"
+
+async function createReminderNotification({ date, title, description, triggerId }) {
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  const trigger = {
+    type: TriggerType.TIMESTAMP,
+    timestamp: date.getTime(),
+  };
+
+  await notifee.createTriggerNotification(
+    {
+      id: triggerId,
+      title: title,
+      body: description,
+      android: {
+        channelId: channelId,
+      },
+    },
+    trigger,
+  );
+}
 
 const TaskEdit = ({ route, navigation }) => {
   const [task, setTask] = useState({
     title: 'New Task',
     description: '',
-    date: '',
+    date: new Date(),
     reminders: [],
     themeColor: colors.primary,
+    id: uuid.v4().toString()
   });
-
 
   const validateTaskId = () => {
     try { return route.params.taskId; }
@@ -30,17 +56,58 @@ const TaskEdit = ({ route, navigation }) => {
   }
 
   useEffect(() => {
+    console.log()
     taskId != undefined && loadTaskFromMemoryById(taskId)
   }, []);
+
+  const setRemindersNotification = () => {
+    const substractHoursFromDate = ({ date, hours }) => {
+      return new Date(date).setHours(
+        date.getHours() - hours
+      )
+    }
+
+    // CLEAR ALL TRIGGERS FROM THIS TASK
+    [24, 12, 6, 4, 2, 1].forEach((element) => {
+      const triggerId = `${task.id}-${element}`;
+      notifee.getTriggerNotifications()
+        .then(
+          res => {
+            res.indexOf(triggerId) !== -1
+              && notifee.cancelTriggerNotification(triggerId)
+          }
+        )
+        .catch(
+          err => { console.error(err) }
+        )
+    })
+
+    // CREATE  NEW TRIGERS
+    task.reminders.forEach((element) => {
+      createReminderNotification({
+        title: task.title,
+        description: task.description,
+        date: new Date(
+          substractHoursFromDate({
+            date: task.date,
+            hours: element
+          })),
+        triggerId: `${task.id}-${element}`
+      }).catch(err => console.error(err))
+    })
+  }
 
   const saveTask = () => {
     readData({ key: KEYS.TASKS })
       .then(res => {
         let temp = res;
+
         taskId != undefined
           ? temp[taskId] = task
           : temp.push(task);
+
         saveData({ key: KEYS.TASKS, data: temp })
+        setRemindersNotification();
       })
       .catch(e => {
         saveData({ key: KEYS.TASKS, data: [task] })

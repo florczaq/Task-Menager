@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, Animated, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, Animated, StyleSheet, Image } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { taskList as styles } from '../../styles/Styles';
 
@@ -8,18 +8,13 @@ const MAX_LENGTH = {
   title: 15,
 };
 
-const HiddenButtons = ({ visible, onEdit, onDelete}) => {
+const HiddenButtons = ({ visible, onEdit, onDelete }) => {
 
   return (
     visible &&
-    <>
-      <TouchableOpacity style={styles.editButton} onPress={onEdit}>
-        <Text style={styles.hiddenButtonText}>Edit</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
-        <Text style={styles.hiddenButtonText}>Delete</Text>
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
+      <Image style={styles.hiddenButtonImg} source={require("../../../resources/images/taskList/icons8-trash-64.png")} />
+    </TouchableOpacity>
   )
 }
 
@@ -44,18 +39,18 @@ const Task = (props) => {
     props.onDelete(props.id);
   };
 
-  const onEdit = () =>{
+  const onEdit = () => {
     props.onEdit(props.id)
   }
 
   const onSwipeLeft = (gestureState) => {
-    if (gestureState.dx > -150) return;
+    if (gestureState.dx > -50) return;
     setExpanded(true);
-    Animated.spring(slideX, { toValue: -170, duration: 500, useNativeDriver: true }).start();
+    Animated.spring(slideX, { toValue: -110, duration: 500, useNativeDriver: true }).start();
   }
 
   const onSwipeRight = (gestureState) => {
-    if (gestureState.dx < 150) return;
+    if (gestureState.dx < 100) return;
     Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true }).start(
       ({ finished }) => { finished && (() => setExpanded(false)); }
     );
@@ -64,7 +59,7 @@ const Task = (props) => {
   return (
     <Animated.View style={[styles.containerView, { transform: [{ translateX: slideX }] }]}>
       <GestureRecognizer style={styles.gestureRecognizer} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.task, { backgroundColor: props.themeColor }]}
           onPress={onEdit}
         >
@@ -95,3 +90,10 @@ const Task = (props) => {
 }
 
 export default Task;
+
+
+{/* 
+  <a target="_blank" href="https://icons8.com/icon/G01ACMKXfdpJ/trash">
+   Trash
+  </a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> 
+*/ }
