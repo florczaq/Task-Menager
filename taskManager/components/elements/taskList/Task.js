@@ -30,7 +30,11 @@ const Task = (props) => {
   };
 
   const convertDate = (date) => {
-    return (date ? `Date:  ${new Date(date).toLocaleDateString()}` : "")
+    return (
+      date
+        ? `Date:  ${new Date(date).toLocaleDateString()} ${new Date(date).getHours()}:${new Date(date).getMinutes()}`
+        : ""
+    )
   };
 
   const onDelete = () => {

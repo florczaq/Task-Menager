@@ -1,36 +1,12 @@
-import notifee, { TriggerType } from "@notifee/react-native";
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import { KEYS, readData, saveData } from "../storage/LocalDataStorage";
 import Header from './elements/general/Header';
 import Buttons from "./elements/taskEdit/Buttons";
+import * as Notifications from "./notificationsHandler/Notifications";
 import { colors } from './properties/colors';
 import { general, taskEdit as styles } from './styles/Styles';
-
-async function createReminderNotification({ date, title, description, triggerId }) {
-  const channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
-  });
-
-  const trigger = {
-    type: TriggerType.TIMESTAMP,
-    timestamp: date.getTime(),
-  };
-
-  await notifee.createTriggerNotification(
-    {
-      id: triggerId,
-      title: title,
-      body: description,
-      android: {
-        channelId: channelId,
-      },
-    },
-    trigger,
-  );
-}
 
 const TaskEdit = ({ route, navigation }) => {
   const [task, setTask] = useState({
@@ -60,49 +36,33 @@ const TaskEdit = ({ route, navigation }) => {
   }, []);
 
   const setRemindersNotification = () => {
-    const substractHoursFromDate = ({ date, hours }) => {
-      return new Date(date).setHours(
-        date.getHours() - hours
-      )
-    }
-
-    // CLEAR ALL TRIGGERS FROM THIS TASK
-    [24, 12, 6, 4, 2, 1].forEach((element) => {
-      const triggerId = `${task.id}-${element}`;
-      notifee.getTriggerNotifications()
-        .then(
-          res => {
-            res.indexOf(triggerId) !== -1
-              && notifee.cancelTriggerNotification(triggerId)
-          }
-        )
-        .catch(
-          err => { console.error(err) }
-        )
+    Notifications.createTaskReminders({
+      taskId: task.id,
+      title: task.title,
+      description: task.description,
+      taskDate: task.date,
+      reminders: task.reminders
     })
-
-    // CREATE  NEW TRIGERS
-    task.reminders.forEach((element) => {
-      createReminderNotification({
-        title: task.title,
-        description: task.description,
-        date: new Date(
-          substractHoursFromDate({
-            date: task.date,
-            hours: element
-          })),
-        triggerId: `${task.id}-${element}`
-      }).catch(err => {
-        console.error(err)
-        alert("Something went wrong with saving reminders. Make sure all reimnders are in the future.")
-      })
-    })
-
-    // notifee.getTriggerNotifications()
-    //   .then(res => {
-    //     console.log(res)
-    //   })
   }
+
+  // Notifications.cancelAllTaskNotifications({ taskId: task.id });
+
+  // CREATE  NEW TRIGGERS
+  // task.reminders.forEach((element) => {
+  //   Notifications.createReminderNotification({
+  //     title: task.title,
+  //     description: task.description,
+  //     date: new Date(
+  //       substractHoursFromDate({
+  //         date: task.date,
+  //         hours: element
+  //       })),
+  //     triggerId: `${task.id}-${element}`
+  //   }).catch(err => {
+  //     console.error(err)
+  //     alert("Something went wrong with saving reminders. Make sure all reimnders are in the future.")
+  //   })
+  // })
 
   const saveTask = () => {
     readData({ key: KEYS.TASKS })

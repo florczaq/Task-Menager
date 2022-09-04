@@ -137,7 +137,8 @@ export const taskList = StyleSheet.create({
     textShadowRadius: 8,
   },
   date: {
-    fontSize: 17,
+    fontSize: 13,
+    fontWeight: "500",
     color: '#fff',
     textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
