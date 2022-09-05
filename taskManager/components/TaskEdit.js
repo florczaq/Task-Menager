@@ -45,25 +45,6 @@ const TaskEdit = ({ route, navigation }) => {
     })
   }
 
-  // Notifications.cancelAllTaskNotifications({ taskId: task.id });
-
-  // CREATE  NEW TRIGGERS
-  // task.reminders.forEach((element) => {
-  //   Notifications.createReminderNotification({
-  //     title: task.title,
-  //     description: task.description,
-  //     date: new Date(
-  //       substractHoursFromDate({
-  //         date: task.date,
-  //         hours: element
-  //       })),
-  //     triggerId: `${task.id}-${element}`
-  //   }).catch(err => {
-  //     console.error(err)
-  //     alert("Something went wrong with saving reminders. Make sure all reimnders are in the future.")
-  //   })
-  // })
-
   const saveTask = () => {
     readData({ key: KEYS.TASKS })
       .then(res => {

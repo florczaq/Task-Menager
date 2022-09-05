@@ -20,21 +20,18 @@ const HiddenButtons = ({ visible, onEdit, onDelete }) => {
 
 const Task = (props) => {
   const [expanded, setExpanded] = React.useState(false);
-
   const slideX = React.useRef(new Animated.Value(0)).current;
 
   const compressText = (text, maxLength) => {
-    return text.length < maxLength
-      ? text
-      : `${String(text).slice(0, maxLength)}...`
+    if (text.length < maxLength) return text;
+    return `${String(text).slice(0, maxLength)}...`
   };
 
   const convertDate = (date) => {
-    return (
-      date
-        ? `Date:  ${new Date(date).toLocaleDateString()} ${new Date(date).getHours()}:${new Date(date).getMinutes()}`
-        : ""
-    )
+    if (!date) return "";
+    const timeString = new Date(date).toLocaleTimeString();
+    const time = timeString.substring(0, timeString.length - 3)
+    return `Date:  ${new Date(date).toLocaleDateString()} ${time}`
   };
 
   const onDelete = () => {
@@ -50,14 +47,16 @@ const Task = (props) => {
   const onSwipeLeft = (gestureState) => {
     if (gestureState.dx > -50) return;
     setExpanded(true);
-    Animated.spring(slideX, { toValue: -110, duration: 500, useNativeDriver: true }).start();
+    Animated.spring(slideX, { toValue: -110, duration: 500, useNativeDriver: true })
+      .start();
   }
 
   const onSwipeRight = (gestureState) => {
     if (gestureState.dx < 100) return;
-    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true }).start(
-      ({ finished }) => { finished && (() => setExpanded(false)); }
-    );
+    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true })
+      .start(
+        ({ finished }) => { finished && (() => setExpanded(false)); }
+      );
   }
 
   return (

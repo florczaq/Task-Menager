@@ -56,13 +56,7 @@ const Buttons = props => {
   };
 
   const validateReminderButtonText = reminders => {
-    if (!reminders) return 'Set reminders';
-    // const MAX_LENGTH = 25;
-    // const parsedRemindersToString = reminders.join(', ')
-    return (reminders.join(', '))
-    // parsedRemindersToString.length > MAX_LENGTH
-    //   ? `${parsedRemindersToString.slice(0, MAX_LENGTH)}...`
-    //   : parsedRemindersToString
+    return reminders.length ? reminders.join(', ') : "Set reminders";
   };
 
   const saveReminders = reminders => {

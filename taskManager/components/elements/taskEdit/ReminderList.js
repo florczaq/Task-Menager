@@ -2,22 +2,17 @@ import React from "react";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { taskEdit as styles } from "../../styles/Styles";
 
+const REMINDERS_TIMES_LIST = [
+  24, 12, 6, 4, 2, 1
+]
+
 export default class RemindersList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [
-        { content: 24, selected: false, },
-        { content: 12, selected: false },
-        { content: 6, selected: false },
-        { content: 4, selected: false },
-        { content: 2, selected: false },
-        { content: 1, selected: false },
-        // { content: '30 min', selected: false },
-        // { content: '15 min', selected: false },
-        // { content: '10 min', selected: false },
-        // { content: '5 min', selected: false },
-      ],
+      items: REMINDERS_TIMES_LIST.map((element) => {
+        return { content: element, selected: false }
+      })
     };
     this.itemSelected = this.itemSelected.bind(this);
     this.renderItems = this.renderItems.bind(this);

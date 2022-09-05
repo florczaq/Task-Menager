@@ -39,13 +39,18 @@ async function createReminderNotification(
     timestamp: triggerDate.getTime(),
   };
 
-  const notificationBody =
-    `${new Date(taskDate).toLocaleDateString()} ${new Date(taskDate).getHours()}:${new Date(taskDate).getMinutes()}  ${description}`;
+  const convertDate = (date) => {
+    if (!date) return "";
+    const timeString = new Date(date).toLocaleTimeString();
+    const time = timeString.substring(0, timeString.length - 3)
+    return `Date:  ${new Date(date).toLocaleDateString()} ${time}`
+  };
+
 
   await notifee.createTriggerNotification({
     id: triggerId,
     title: title,
-    body: notificationBody,
+    body: `${convertDate(taskDate)}  ${description}`,
     android: {
       channelId: channelId,
     },
