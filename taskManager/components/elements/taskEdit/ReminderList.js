@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { taskEdit as styles } from "../../styles/Styles";
 
-const REMINDERS_TIMES_LIST = [
+export const REMINDERS_TIMES_LIST = [
   24, 12, 6, 4, 2, 1
 ]
 
@@ -29,10 +29,11 @@ export default class RemindersList extends React.Component {
     return this.state.items.map((item, i) => (
       <TouchableOpacity
         key={i}
-        style={[
-          styles.reminderButton,
-          styles[`_reminderButtonSelected_${item.selected}`],
-        ]}
+        style={
+          [
+            styles.reminderButton,
+            styles[`_reminderButtonSelected_${item.selected}`],
+          ]}
         onPress={() => this.itemSelected(i)}
       >
         <Text

@@ -1,14 +1,16 @@
 import notifee, { TriggerType } from "@notifee/react-native";
+import { REMINDERS_TIMES_LIST } from "../elements/taskEdit/ReminderList"
+
 
 export function createTaskReminders(
   { taskId, title, description, taskDate, reminders }
 ) {
+
   const substractHoursFromDate = ({ date, hours }) => {
     return new Date(date).setHours(date.getHours() - hours)
   }
 
   cancelAllTaskNotifications({ taskId: taskId });
-
   reminders.forEach((element) => {
     createReminderNotification({
       title: title,
@@ -54,19 +56,19 @@ async function createReminderNotification(
     android: {
       channelId: channelId,
     },
-  }, trigger,
-  );
+  }, trigger);
 }
 
 export function cancelAllTaskNotifications({ taskId }) {
-  [24, 12, 6, 4, 2, 1].forEach((element) => {
+  REMINDERS_TIMES_LIST.forEach((element) => {
     const triggerId = `${taskId}-${element}`;
-
     notifee.getTriggerNotifications()
       .then(
         res => {
           res.indexOf(triggerId) !== -1
-            && notifee.cancelTriggerNotification(triggerId);
+            && notifee.cancelTriggerNotification(triggerId).catch(
+              err => console.error(err)
+            );
         }
       )
       .catch(err => { console.error(err) })

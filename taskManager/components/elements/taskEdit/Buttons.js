@@ -56,8 +56,17 @@ const Buttons = props => {
   };
 
   const validateReminderButtonText = reminders => {
-    return reminders.length ? reminders.join(', ') : "Set reminders";
+    return reminders.length
+      ? compressText(
+        `Reminders: ${reminders.join(', ')}`,
+        21
+      )
+      : "Set reminders";
   };
+
+  const compressText = (text, maxLength) => {
+    return text.length < maxLength ? text : `${text.slice(0, maxLength)}...`
+  }
 
   const saveReminders = reminders => {
     props.setReminders(reminders);
