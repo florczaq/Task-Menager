@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { back } from 'react-native/Libraries/Animated/Easing';
 import { colors } from '../properties/colors';
 
 export const general = StyleSheet.create({
@@ -469,6 +470,10 @@ export const taskEdit = StyleSheet.create({
   _reminderButtonTextSelected_true: {
     color: '#fff',
   },
+  _reminderButtonDisabled:{
+    opacity: 0.3,
+    backgroundColor: 'lightgrey'
+  }
 });
 
 export const colorPicker = StyleSheet.create({

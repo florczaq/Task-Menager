@@ -74,6 +74,7 @@ const TaskEdit = ({ route, navigation }) => {
         />
         <Buttons
           navigation={navigation}
+          taskDate={task.date}
           setDate={date => setTask({ ...task, date: date })}
           setReminders={rem => setTask({ ...task, reminders: rem })}
           setThemeColor={color => setTask({ ...task, themeColor: color })}

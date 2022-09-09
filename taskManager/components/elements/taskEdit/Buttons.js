@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { taskEdit as styles } from '../../styles/Styles';
@@ -9,7 +9,7 @@ const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
-  const [dateButtonText, setDateButtonText] = useState('Set Date');
+  const [dateButtonText, setDateButtonText] = useState("Set Date");
   const [themeColorText, setThemeColorText] = useState('Theme Color');
   const [remindersButtonText, setRemindersButtonText] = useState('Set reminders');
 
@@ -20,9 +20,7 @@ const Buttons = props => {
   ];
 
   const confirmButtons = [
-    {
-      content: '❌', func: () => props.navigation.goBack()
-    },
+    { content: '❌', func: () => props.navigation.goBack() },
     {
       content: '✔', func: () => {
         props.saveTask()
@@ -46,6 +44,7 @@ const Buttons = props => {
       <Text style={styles.buttonText}>{button.content}</Text>
     </TouchableOpacity>
   ));
+
 
   const dateSelected = date => {
     setOpenDate(false);
@@ -87,7 +86,7 @@ const Buttons = props => {
         is24hourSource="device"
         title={'Task date'}
         open={openDate}
-        date={new Date()}
+        date={props.taskDate ? new Date(props.taskDate) : new Date()}
         minimumDate={new Date()}
         onCancel={() => setOpenDate(false)}
         onConfirm={dateSelected}
@@ -95,6 +94,7 @@ const Buttons = props => {
       />
       <RemindersList
         visible={reminderModalVisible}
+        taskDate={props.taskDate || new Date()}
         onSave={saveReminders}
       />
       <PickColor

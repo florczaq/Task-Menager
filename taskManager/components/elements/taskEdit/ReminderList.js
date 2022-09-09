@@ -25,6 +25,19 @@ export default class RemindersList extends React.Component {
     this.forceUpdate();
   };
 
+  isOptionDisabled = (itemContent) => {
+    const minimalMinutesDifference = 5;
+    const dateAfterSubstract = new Date(this.props.taskDate)
+      .setHours(this.props.taskDate
+        .getHours() - itemContent
+      )
+    return new Date().getTime() > new Date(dateAfterSubstract)
+      .setMinutes(
+        new Date(dateAfterSubstract)
+          .getMinutes() - minimalMinutesDifference
+      );
+  }
+
   renderItems = () => {
     return this.state.items.map((item, i) => (
       <TouchableOpacity
@@ -33,8 +46,12 @@ export default class RemindersList extends React.Component {
           [
             styles.reminderButton,
             styles[`_reminderButtonSelected_${item.selected}`],
+            this.isOptionDisabled(item.content) && styles._reminderButtonDisabled
           ]}
         onPress={() => this.itemSelected(i)}
+        disabled={
+          this.isOptionDisabled(item.content)
+        }
       >
         <Text
           style={[
