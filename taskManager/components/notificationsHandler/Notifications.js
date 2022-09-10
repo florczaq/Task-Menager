@@ -1,9 +1,7 @@
 import notifee, { TriggerType } from "@notifee/react-native";
 import { REMINDERS_TIMES_LIST } from "../elements/taskEdit/ReminderList"
 
-
-export function createTaskReminders(
-  { taskId, title, description, taskDate, reminders }
+export function createTaskReminders({ taskId, title, description, taskDate, reminders }
 ) {
 
   const substractHoursFromDate = ({ date, hours }) => {
@@ -24,7 +22,7 @@ export function createTaskReminders(
       taskDate: taskDate
     }).catch(err => {
       console.error(err)
-      alert("Something went wrong with saving reminders. Make sure all reimnders are in the future.")
+      alert("Something went wrong with saving reminders.")
     })
   })
 }
@@ -61,32 +59,17 @@ async function createReminderNotification(
 }
 
 export function cancelAllTaskNotifications({ taskId }) {
-  console.log(taskId)
-  console.log(
-    notifee.getTriggerNotificationIds().then(
-      res => console.log(res)
-    )
-  )
   REMINDERS_TIMES_LIST.forEach((element) => {
     const triggerId = `${taskId}-${element}`;
     notifee.getTriggerNotificationIds()
       .then(
         res => {
-          res.indexOf(triggerId) !== -1
-            && notifee.cancelTriggerNotification(triggerId)
-              .then(
-                console.log("Good")
-              )
-              .catch(
-                err => console.error(err)
-              );
+          res.indexOf(triggerId) !== -1 && notifee.cancelTriggerNotification(triggerId)
+            .catch(
+              err => console.error(err)
+            );
         }
       )
       .catch(err => { console.error(err) })
   })
-  console.log(
-    notifee.getTriggerNotificationIds().then(
-      res => console.log(res)
-    )
-  )
 }
