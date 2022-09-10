@@ -11,6 +11,7 @@ export function createTaskReminders(
   }
 
   cancelAllTaskNotifications({ taskId: taskId });
+
   reminders.forEach((element) => {
     createReminderNotification({
       title: title,
@@ -60,17 +61,32 @@ async function createReminderNotification(
 }
 
 export function cancelAllTaskNotifications({ taskId }) {
+  console.log(taskId)
+  console.log(
+    notifee.getTriggerNotificationIds().then(
+      res => console.log(res)
+    )
+  )
   REMINDERS_TIMES_LIST.forEach((element) => {
     const triggerId = `${taskId}-${element}`;
-    notifee.getTriggerNotifications()
+    notifee.getTriggerNotificationIds()
       .then(
         res => {
           res.indexOf(triggerId) !== -1
-            && notifee.cancelTriggerNotification(triggerId).catch(
-              err => console.error(err)
-            );
+            && notifee.cancelTriggerNotification(triggerId)
+              .then(
+                console.log("Good")
+              )
+              .catch(
+                err => console.error(err)
+              );
         }
       )
       .catch(err => { console.error(err) })
   })
+  console.log(
+    notifee.getTriggerNotificationIds().then(
+      res => console.log(res)
+    )
+  )
 }

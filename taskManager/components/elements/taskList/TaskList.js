@@ -3,7 +3,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { readData, saveData } from '../../../storage/LocalDataStorage';
 import { taskList as styles } from '../../styles/Styles';
 import Task from './Task';
-
+import * as Notifications from "../../notificationsHandler/Notifications"
 
 const EmptyTaskList = () => {
   return (
@@ -16,9 +16,7 @@ const EmptyTaskList = () => {
 const TaskList = (props) => {
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    reloadTasks();
-  })
+  useEffect(() => { reloadTasks(); })
 
   const reloadTasks = () => {
     readData({ key: "taskList" })
@@ -26,21 +24,18 @@ const TaskList = (props) => {
   }
 
   const onDelete = (id) => {
-    const newList = tasks.filter((element, index) => {
-      return index != id
-    })
-
+    const newList = tasks.filter((element, index) => { return index != id })
     saveData({
       key: "taskList",
       data: newList
     })
+    console.log(id);
+    Notifications.cancelAllTaskNotifications({ taskId: tasks[id].id })
     setTasks(newList)
     reloadTasks();
   }
 
-  const onEdit = (id) => {
-    props.navigation.navigate("Task Edit", { taskId: id })
-  }
+  const onEdit = (id) => props.navigation.navigate("Task Edit", { taskId: id })
 
   const renderItems = tasks.map((task, i) => (
     <Task
@@ -52,17 +47,17 @@ const TaskList = (props) => {
     />
   ))
 
-  const content = tasks.length
-    ? renderItems
-    : <EmptyTaskList />
-
   return (
     <ScrollView
       style={styles.scrollView}
       contentContainerStyle={{ alignItems: "center" }}
     >
       <View style={styles.taskContainer}>
-        {content}
+        {
+          tasks.length
+            ? renderItems
+            : <EmptyTaskList />
+        }
       </View>
     </ScrollView>
   );

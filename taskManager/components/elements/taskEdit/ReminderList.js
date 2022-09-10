@@ -28,7 +28,7 @@ export default class RemindersList extends React.Component {
   isOptionDisabled = (itemContent) => {
     const minimalMinutesDifference = 5;
     const dateAfterSubstract = new Date(this.props.taskDate)
-      .setHours(this.props.taskDate
+      .setHours(new Date(this.props.taskDate)
         .getHours() - itemContent
       )
     return new Date().getTime() > new Date(dateAfterSubstract)
