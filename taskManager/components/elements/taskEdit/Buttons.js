@@ -95,6 +95,7 @@ const Buttons = props => {
       <RemindersList
         visible={reminderModalVisible}
         taskDate={props.taskDate || new Date()}
+        taskId={props.taskId}
         onSave={saveReminders}
       />
       <PickColor

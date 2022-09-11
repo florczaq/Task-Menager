@@ -193,8 +193,8 @@ export const taskList = StyleSheet.create({
     borderColor: "grey",
     elevation: 5,
   },
-  hiddenButtonImg:{
-    transform: [{scale: 0.5}]
+  hiddenButtonImg: {
+    transform: [{ scale: 0.5 }]
   }
   // hiddenButtonText: {
   //   color: "#fff",
@@ -263,6 +263,9 @@ export const noteList = StyleSheet.create({
     fontWeight: '700',
     width: "100%",
     color: "#fff",
+    textShadowColor: "#000",
+    textShadowRadius: 1,
+    textShadowOffset: { width: 2, height: 2 }
   },
   selectedNote: {
     justifyContent: "center",
@@ -470,7 +473,7 @@ export const taskEdit = StyleSheet.create({
   _reminderButtonTextSelected_true: {
     color: '#fff',
   },
-  _reminderButtonDisabled:{
+  _reminderButtonDisabled: {
     opacity: 0.3,
     backgroundColor: 'lightgrey'
   }

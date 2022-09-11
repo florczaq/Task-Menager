@@ -1,107 +1,124 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { KEYS, readData } from "../../../storage/LocalDataStorage";
 import { taskEdit as styles } from "../../styles/Styles";
 
 export const REMINDERS_TIMES_LIST = [
   24, 12, 6, 4, 2, 1
 ]
 
-export default class RemindersList extends React.Component {
+class ListRender extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: REMINDERS_TIMES_LIST.map((element) => {
-        return { content: element, selected: false }
-      })
-    };
     this.itemSelected = this.itemSelected.bind(this);
-    this.renderItems = this.renderItems.bind(this);
-  }
+  };
 
   itemSelected = id => {
-    let temp = this.state.items;
+    let temp = this.props.items;
     temp[id].selected = !temp[id].selected;
-    this.setState({ items: temp });
-    this.forceUpdate();
-  };
-
-  isOptionDisabled = (itemContent) => {
-    const minimalMinutesDifference = 5;
-    const dateAfterSubstract = new Date(this.props.taskDate)
-      .setHours(new Date(this.props.taskDate)
-        .getHours() - itemContent
-      )
-    return new Date().getTime() > new Date(dateAfterSubstract)
-      .setMinutes(
-        new Date(dateAfterSubstract)
-          .getMinutes() - minimalMinutesDifference
-      );
-  }
-
-  renderItems = () => {
-    return this.state.items.map((item, i) => (
-      <TouchableOpacity
-        key={i}
-        style={
-          [
-            styles.reminderButton,
-            styles[`_reminderButtonSelected_${item.selected}`],
-            this.isOptionDisabled(item.content) && styles._reminderButtonDisabled
-          ]}
-        onPress={() => this.itemSelected(i)}
-        disabled={
-          this.isOptionDisabled(item.content)
-        }
-      >
-        <Text
-          style={[
-            styles.reminderButtonText,
-            styles[`_reminderButtonTextSelected_${item.selected}`],
-          ]}
-        >
-          {`${item.content} h`}
-        </Text>
-      </TouchableOpacity>
-    ));
-  };
-
-  saveReminders = () => {
-    this.props.onSave(
-      this.state.items
-        .map(item => {
-          return item.selected ? item.content : null;
-        })
-        .filter(item => {
-          if (item !== undefined) return item;
-        })
-    );
+    this.props.setItems(temp)
+    this.forceUpdate()
   };
 
   render() {
     return (
-      <Modal
-        transparent
-        animationType="fade"
-        visible={this.props.visible}
-        style={styles.reminderModal}
-      >
-        <View style={styles.reminderContainer}>
-          <View style={styles.reminderScrollViewContainer}>
-            <ScrollView style={styles.reminderScrollView}>
-              <View style={styles.reminderItemsContainer}>
-                {this.renderItems()}
-              </View>
-            </ScrollView>
-          </View>
-
-          <TouchableOpacity
-            style={styles.reminderCloseButton}
-            onPress={this.saveReminders}
+      this.props.items.map((item, i) => (
+        <TouchableOpacity
+          key={i}
+          style={[
+            styles.reminderButton,
+            styles[`_reminderButtonSelected_${item.selected}`],
+            this.props.isOptionDisabled(item.content) && styles._reminderButtonDisabled]}
+          onPress={() => this.itemSelected(i)}
+          disabled={
+            this.props.isOptionDisabled(item.content)
+          }
+        >
+          <Text
+            style={[styles.reminderButtonText,
+            styles[`_reminderButtonTextSelected_${item.selected}`]]}
           >
-            <Text style={styles.reminderCloseButtonText}>Save</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    );
+            {`${item.content} h`}
+          </Text>
+        </TouchableOpacity>
+      ))
+    )
   }
+
 }
+
+const ReminderList = (props) => {
+  const [items, setItems] = useState(REMINDERS_TIMES_LIST.map(
+    (element) => { return { content: element, selected: false } }
+  ));
+
+  useEffect(() => {
+    props.taskId != undefined && readData({ key: KEYS.TASKS })
+      .then(res => {
+        setItems(
+          REMINDERS_TIMES_LIST.map(
+            (element) => {
+              return {
+                content: element,
+                selected: res[props.taskId].reminders.indexOf(element) !== -1
+              }
+            }
+          )
+        )
+      })
+      .catch(err => console.error(err))
+  }, [])
+
+  const isOptionDisabled = (itemContent) => {
+    const minimalMinutesDifference = 5;
+    const dateAfterSubstract = new Date(props.taskDate).setHours(
+      new Date(props.taskDate).getHours() - itemContent
+    )
+
+    return new Date().getTime() > new Date(dateAfterSubstract)
+      .setMinutes(new Date(dateAfterSubstract).getMinutes() - minimalMinutesDifference
+      );
+  }
+
+  const saveReminders = () => {
+    props.onSave(items
+      .map(item => {
+        return item.selected ? item.content : null;
+      })
+      .filter(item => {
+        return item !== null;
+      })
+    );
+  };
+
+  return (
+    <Modal
+      transparent
+      animationType="fade"
+      visible={props.visible}
+      style={styles.reminderModal}
+    >
+      <View style={styles.reminderContainer}>
+        <View style={styles.reminderScrollViewContainer}>
+          <ScrollView style={styles.reminderScrollView}>
+            <View style={styles.reminderItemsContainer}>
+              <ListRender
+                items={items}
+                isOptionDisabled={isOptionDisabled}
+                setItems={setItems}
+              />
+            </View>
+          </ScrollView>
+        </View>
+        <TouchableOpacity
+          style={styles.reminderCloseButton}
+          onPress={saveReminders}
+        >
+          <Text style={styles.reminderCloseButtonText}>Save</Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  )
+}
+
+export default ReminderList;

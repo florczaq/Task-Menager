@@ -27,7 +27,9 @@ const TaskEdit = ({ route, navigation }) => {
 
   const loadTaskFromMemoryById = (id) => {
     readData({ key: KEYS.TASKS })
-      .then(res => { setTask(res[id]) })
+      .then(res => {
+        setTask(() => res[id])
+      })
       .catch(err => { console.error(err) })
   }
 
@@ -46,6 +48,7 @@ const TaskEdit = ({ route, navigation }) => {
   }
 
   const saveTask = () => {
+    // console.log(task)
     readData({ key: KEYS.TASKS })
       .then(res => {
         let temp = res;
@@ -75,10 +78,14 @@ const TaskEdit = ({ route, navigation }) => {
         <Buttons
           navigation={navigation}
           taskDate={task.date}
+          taskReminders={task.reminders}
           setDate={date => setTask({ ...task, date: date })}
-          setReminders={rem => setTask({ ...task, reminders: rem })}
+          setReminders={rem => {
+            setTask({ ...task, reminders: rem })
+          }}
           setThemeColor={color => setTask({ ...task, themeColor: color })}
           saveTask={saveTask}
+          taskId={taskId}
         />
       </View>
     </SafeAreaView>
