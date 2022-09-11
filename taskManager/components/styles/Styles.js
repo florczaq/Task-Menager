@@ -196,14 +196,6 @@ export const taskList = StyleSheet.create({
   hiddenButtonImg: {
     transform: [{ scale: 0.5 }]
   }
-  // hiddenButtonText: {
-  //   color: "#fff",
-  //   fontSize: 15,
-  //   fontWeight: "700",
-  //   textShadowColor: "#000",
-  //   textShadowOffset: {width: 0, height: 0},
-  //   textShadowRadius: 8,
-  // }
 });
 
 export const noteList = StyleSheet.create({
@@ -256,7 +248,10 @@ export const noteList = StyleSheet.create({
     fontWeight: '800',
     width: "100%",
     color: "#fff",
-    textAlign: 'center'
+    textAlign: 'center',
+    textShadowColor: "#000",
+    textShadowRadius: 8,
+    textShadowOffset: { width: 1, height: 1 }
   },
   noteTextText: {
     fontSize: 13,
@@ -264,8 +259,8 @@ export const noteList = StyleSheet.create({
     width: "100%",
     color: "#fff",
     textShadowColor: "#000",
-    textShadowRadius: 1,
-    textShadowOffset: { width: 2, height: 2 }
+    textShadowRadius: 8,
+    textShadowOffset: { width: 1, height: 1 }
   },
   selectedNote: {
     justifyContent: "center",
