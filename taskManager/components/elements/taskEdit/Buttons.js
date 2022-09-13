@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import { taskEdit as styles } from '../../styles/Styles';
+import {taskEdit as styles} from '../../styles/Styles';
 import PickColor from '../general/PickColor';
 import RemindersList from './ReminderList';
 
@@ -9,23 +9,25 @@ const Buttons = props => {
   const [openDate, setOpenDate] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [reminderModalVisible, setReminderModalVisible] = useState(false);
-  const [dateButtonText, setDateButtonText] = useState("Set Date");
+  const [dateButtonText, setDateButtonText] = useState('Set Date');
   const [themeColorText, setThemeColorText] = useState('Theme Color');
-  const [remindersButtonText, setRemindersButtonText] = useState('Set reminders');
+  const [remindersButtonText, setRemindersButtonText] =
+    useState('Set reminders');
 
   const buttons = [
-    { content: dateButtonText, func: () => setOpenDate(true), },
-    { content: remindersButtonText, func: () => setReminderModalVisible(true), },
-    { content: themeColorText, func: () => setOpenColorPicker(true) },
+    {content: dateButtonText, func: () => setOpenDate(true)},
+    {content: remindersButtonText, func: () => setReminderModalVisible(true)},
+    {content: themeColorText, func: () => setOpenColorPicker(true)},
   ];
 
   const confirmButtons = [
-    { content: '❌', func: () => props.navigation.goBack() },
+    {content: '❌', func: () => props.navigation.goBack()},
     {
-      content: '✔', func: () => {
-        props.saveTask()
-        props.navigation.navigate('Home')
-      }
+      content: '✔',
+      func: () => {
+        props.saveTask();
+        props.navigation.navigate('Home');
+      },
     },
   ];
 
@@ -45,7 +47,6 @@ const Buttons = props => {
     </TouchableOpacity>
   ));
 
-
   const dateSelected = date => {
     setOpenDate(false);
     props.setDate(date);
@@ -56,16 +57,13 @@ const Buttons = props => {
 
   const validateReminderButtonText = reminders => {
     return reminders.length
-      ? compressText(
-        `Reminders: ${reminders.join(', ')}`,
-        21
-      )
-      : "Set reminders";
+      ? compressText(`Reminders: ${reminders.join(', ')}`, 21)
+      : 'Set reminders';
   };
 
   const compressText = (text, maxLength) => {
-    return text.length < maxLength ? text : `${text.slice(0, maxLength)}...`
-  }
+    return text.length < maxLength ? text : `${text.slice(0, maxLength)}...`;
+  };
 
   const saveReminders = reminders => {
     props.setReminders(reminders);
@@ -77,6 +75,10 @@ const Buttons = props => {
 
   const closeThemeColor = () => setOpenColorPicker(false);
 
+  const minimalDate = new Date(
+    new Date().setMinutes(new Date().getMinutes() + 5),
+  );
+
   return (
     <View style={styles.buttonContainer}>
       {buttonsRender}
@@ -86,15 +88,15 @@ const Buttons = props => {
         is24hourSource="device"
         title={'Task date'}
         open={openDate}
-        date={props.taskDate ? new Date(props.taskDate) : new Date()}
-        minimumDate={new Date()}
+        date={props.taskDate ? new Date(props.taskDate) : minimalDate}
+        minimumDate={minimalDate}
         onCancel={() => setOpenDate(false)}
         onConfirm={dateSelected}
         theme="light"
       />
       <RemindersList
         visible={reminderModalVisible}
-        taskDate={props.taskDate || new Date()}
+        taskDate={props.taskDate || minimalDate}
         taskId={props.taskId}
         onSave={saveReminders}
       />

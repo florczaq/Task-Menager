@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Modal, Text, TouchableOpacity, View } from 'react-native';
-import { ColorPicker } from 'react-native-btr';
-import { colors } from '../../properties/colors';
-import { colorPicker as styles } from '../../styles/Styles';
+import React, {useState} from 'react';
+import {Modal, Text, TouchableOpacity, View} from 'react-native';
+import {ColorPicker} from 'react-native-btr';
+import {colors} from '../../properties/colors';
+import {colorPicker as styles} from '../../styles/Styles';
 
 const PickColor = props => {
   const [selectedColor, setSelectedColor] = useState(colors.primary);

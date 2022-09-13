@@ -1,102 +1,111 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, Animated, StyleSheet, Image } from 'react-native';
+import {Animated, Image, Text, TouchableOpacity} from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { taskList as styles } from '../../styles/Styles';
+import {taskList as styles} from '../../styles/Styles';
 
 const MAX_LENGTH = {
   description: 30,
   title: 15,
 };
 
-const HiddenButtons = ({ visible, onEdit, onDelete }) => {
-
+const HiddenButtons = ({visible, onEdit, onDelete}) => {
   return (
-    visible &&
-    <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
-      <Image style={styles.hiddenButtonImg} source={require("../../../resources/images/taskList/icons8-trash-64.png")} />
-    </TouchableOpacity>
-  )
-}
+    visible && (
+      <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
+        <Image
+          style={styles.hiddenButtonImg}
+          source={require('../../../resources/images/taskList/icons8-trash-64.png')}
+        />
+      </TouchableOpacity>
+    )
+  );
+};
 
-const Task = (props) => {
+const Task = props => {
   const [expanded, setExpanded] = React.useState(false);
   const slideX = React.useRef(new Animated.Value(0)).current;
 
   const compressText = (text, maxLength) => {
     if (text.length < maxLength) return text;
-    return `${String(text).slice(0, maxLength)}...`
+    return `${String(text).slice(0, maxLength)}...`;
   };
 
-  const convertDate = (date) => {
-    if (!date) return "";
+  const convertDate = date => {
+    if (!date) return '';
     const timeString = new Date(date).toLocaleTimeString();
-    const time = timeString.substring(0, timeString.length - 3)
-    return `Date:  ${new Date(date).toLocaleDateString()} ${time}`
+    const time = timeString.substring(0, timeString.length - 3);
+    return `Date:  ${new Date(date).toLocaleDateString()} ${time}`;
   };
 
   const onDelete = () => {
-    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true })
-      .start(({ finished }) => { finished && (() => setExpanded(false)); });
+    Animated.spring(slideX, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(({finished}) => {
+      finished && (() => setExpanded(false));
+    });
     props.onDelete(props.id);
   };
 
   const onEdit = () => {
-    props.onEdit(props.id)
-  }
+    props.onEdit(props.id);
+  };
 
-  const onSwipeLeft = (gestureState) => {
+  const onSwipeLeft = gestureState => {
     if (gestureState.dx > -50) return;
     setExpanded(true);
-    Animated.spring(slideX, { toValue: -110, duration: 500, useNativeDriver: true })
-      .start();
-  }
+    Animated.spring(slideX, {
+      toValue: -110,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
-  const onSwipeRight = (gestureState) => {
+  const onSwipeRight = gestureState => {
     if (gestureState.dx < 100) return;
-    Animated.spring(slideX, { toValue: 0, duration: 300, useNativeDriver: true })
-      .start(
-        ({ finished }) => { finished && (() => setExpanded(false)); }
-      );
-  }
+    Animated.spring(slideX, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(({finished}) => {
+      finished && (() => setExpanded(false));
+    });
+  };
 
   return (
-    <Animated.View style={[styles.containerView, { transform: [{ translateX: slideX }] }]}>
-      <GestureRecognizer style={styles.gestureRecognizer} onSwipeLeft={onSwipeLeft} onSwipeRight={onSwipeRight}>
+    <Animated.View
+      style={[styles.containerView, {transform: [{translateX: slideX}]}]}
+    >
+      <GestureRecognizer
+        style={styles.gestureRecognizer}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
+      >
         <TouchableOpacity
-          style={[styles.task, { backgroundColor: props.themeColor }]}
+          style={[styles.task, {backgroundColor: props.themeColor}]}
           onPress={onEdit}
         >
           <Text style={styles.taskTitle}>
-            {
-              compressText(props.title, MAX_LENGTH.title)
-            }
+            {compressText(props.title, MAX_LENGTH.title)}
           </Text>
-          <Text style={styles.date}>
-            {
-              convertDate(props.date)
-            }
-          </Text>
+          <Text style={styles.date}>{convertDate(props.date)}</Text>
           <Text style={styles.description}>
-            {
-              compressText(props.description, MAX_LENGTH.description)
-            }
+            {compressText(props.description, MAX_LENGTH.description)}
           </Text>
         </TouchableOpacity>
       </GestureRecognizer>
-      <HiddenButtons
-        onEdit={onEdit}
-        onDelete={onDelete}
-        visible={expanded}
-      />
+      <HiddenButtons onEdit={onEdit} onDelete={onDelete} visible={expanded} />
     </Animated.View>
   );
-}
+};
 
 export default Task;
 
-
-{/* 
+{
+  /* 
   <a target="_blank" href="https://icons8.com/icon/G01ACMKXfdpJ/trash">
    Trash
   </a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> 
-*/ }
+*/
+}

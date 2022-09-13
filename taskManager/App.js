@@ -1,5 +1,5 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import NoteEdit from './components/NoteEdit';
 import MyNotes from './components/MyNotes';
@@ -10,9 +10,9 @@ import Welcome from './components/Welcome';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  return ( 
+  return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={Welcome} />
         <Stack.Screen name="Task List" component={MyTasks} />
         <Stack.Screen name="Notes List" component={MyNotes} />

@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { back } from 'react-native/Libraries/Animated/Easing';
-import { colors } from '../properties/colors';
+import {StyleSheet} from 'react-native';
+import {colors} from '../properties/colors';
 
 export const general = StyleSheet.create({
   container: {
@@ -31,7 +30,7 @@ export const header = StyleSheet.create({
     color: '#fff',
     fontSize: 50,
     textShadowColor: '#000',
-    textShadowOffset: { width: 3, height: 3 },
+    textShadowOffset: {width: 3, height: 3},
     textShadowRadius: 1,
   },
   upperBackroundRect: {
@@ -54,7 +53,7 @@ export const header = StyleSheet.create({
     minWidth: '40%',
     textAlign: 'center',
     textShadowColor: '#000',
-    textShadowOffset: { width: 2, height: 2 },
+    textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 5,
   },
 });
@@ -92,7 +91,7 @@ export const welcomePage = StyleSheet.create({
 
 export const taskList = StyleSheet.create({
   task: {
-    position: "relative",
+    position: 'relative',
     backgroundColor: 'rgb(245,245,245)',
     width: '100%',
     height: 80,
@@ -120,10 +119,10 @@ export const taskList = StyleSheet.create({
     fontSize: 20,
     width: '60%',
     textAlign: 'left',
-    fontWeight: "700",
+    fontWeight: '700',
     color: '#fff',
     textShadowColor: '#000',
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 8,
   },
   description: {
@@ -134,68 +133,68 @@ export const taskList = StyleSheet.create({
     paddingLeft: '15%',
     color: '#fff',
     textShadowColor: '#000',
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 8,
   },
   date: {
     fontSize: 13,
-    fontWeight: "500",
+    fontWeight: '500',
     color: '#fff',
     textShadowColor: '#000',
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowOffset: {width: 1, height: 1},
     textShadowRadius: 8,
   },
   scrollView: {
     width: '100%',
-    height: "100%"
+    height: '100%',
   },
   gestureRecognizer: {
-    width: "100%"
+    width: '100%',
   },
   emptyListText: {
-    color: "#000",
+    color: '#000',
     fontSize: 17,
-    fontWeight: "700",
-    color: "grey",
-    opacity: 0.5
+    fontWeight: '700',
+    color: 'grey',
+    opacity: 0.5,
   },
   emptyList: {
-    width: "100%",
-    alignItems: "center"
+    width: '100%',
+    alignItems: 'center',
   },
   containerView: {
-    width: "97%",
-    flexDirection: 'row'
+    width: '97%',
+    flexDirection: 'row',
   },
   editButton: {
     width: 80,
     height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ffb703",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffb703',
     marginLeft: 10,
     marginVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "grey",
+    borderColor: 'grey',
     elevation: 5,
   },
   deleteButton: {
     width: 100,
     height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#d90429",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#d90429',
     marginLeft: 10,
     marginVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "grey",
+    borderColor: 'grey',
     elevation: 5,
   },
   hiddenButtonImg: {
-    transform: [{ scale: 0.5 }]
-  }
+    transform: [{scale: 0.5}],
+  },
 });
 
 export const noteList = StyleSheet.create({
@@ -218,76 +217,75 @@ export const noteList = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 3,
     borderColor: 'grey',
-    opacity: 0.95
+    opacity: 0.95,
   },
   emptyListText: {
-    color: "#000",
+    color: '#000',
     fontSize: 17,
-    fontWeight: "700",
-    color: "grey",
-    opacity: 0.5
+    fontWeight: '700',
+    color: 'grey',
+    opacity: 0.5,
   },
   emptyList: {
-    width: "100%",
-    alignItems: "center"
+    width: '100%',
+    alignItems: 'center',
   },
   noteTitle: {
     paddingVertical: 10,
-    height: "20%",
-    width: "90%",
+    height: '20%',
+    width: '90%',
     borderBottomWidth: 2,
-    borderColor: "#fff"
+    borderColor: '#fff',
   },
   noteText: {
-    height: "70%",
+    height: '70%',
     padding: 10,
-    width: "95%"
+    width: '95%',
   },
   noteTitleText: {
     fontSize: 15,
     fontWeight: '800',
-    width: "100%",
-    color: "#fff",
+    width: '100%',
+    color: '#fff',
     textAlign: 'center',
-    textShadowColor: "#000",
+    textShadowColor: '#000',
     textShadowRadius: 8,
-    textShadowOffset: { width: 1, height: 1 }
+    textShadowOffset: {width: 1, height: 1},
   },
   noteTextText: {
     fontSize: 13,
     fontWeight: '700',
-    width: "100%",
-    color: "#fff",
-    textShadowColor: "#000",
+    width: '100%',
+    color: '#fff',
+    textShadowColor: '#000',
     textShadowRadius: 8,
-    textShadowOffset: { width: 1, height: 1 }
+    textShadowOffset: {width: 1, height: 1},
   },
   selectedNote: {
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.6
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.6,
   },
   selectionImg: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 3,
     width: 50,
     height: 50,
     top: -20,
-    right: -20
+    right: -20,
   },
-
 });
 
 export const noteEdit = StyleSheet.create({
   textarea: {
     width: '100%',
-    height: "100%",
+    height: '100%',
     textAlignVertical: 'top',
     paddingHorizontal: 20,
     borderColor: 'rgba(0,0,0,0.5)',
     fontSize: 25,
     backgroundColor: 'rgba(255,255,255,0.3)',
-    elevation: 1
+    elevation: 1,
   },
   textareaContainer: {
     width: '100%',
@@ -470,8 +468,8 @@ export const taskEdit = StyleSheet.create({
   },
   _reminderButtonDisabled: {
     opacity: 0.3,
-    backgroundColor: 'lightgrey'
-  }
+    backgroundColor: 'lightgrey',
+  },
 });
 
 export const colorPicker = StyleSheet.create({
@@ -509,23 +507,23 @@ export const colorPicker = StyleSheet.create({
 
 export const newElementButton = StyleSheet.create({
   newElementButton: {
-    position: "absolute",
+    position: 'absolute',
     width: 90,
     height: 90,
     backgroundColor: colors.primary,
     bottom: 20,
     zIndex: 2,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: "#777",
+    borderColor: '#777',
     elevation: 10,
     opacity: 0.9,
   },
   newElementButtonText: {
     fontSize: 60,
-    color: "#fff",
+    color: '#fff',
     fontWeight: '800',
   },
   closeSelectedMode: {
@@ -533,6 +531,5 @@ export const newElementButton = StyleSheet.create({
   },
   deleteSelectedItems: {
     right: 100,
-
-  }
-})
+  },
+});
